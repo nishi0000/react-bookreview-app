@@ -11,24 +11,22 @@
   align-items: center;
   .logo-SP {
     display: none;
-}
+  }
 
   @include tab {
     img {
-        width: 250px;
+      width: 250px;
     }
-
   }
 
   @include sp {
     .logo-PC {
-        display: none;
+      display: none;
     }
     .logo-SP {
-        display: block;
-        height: 80px;
-        width: auto;
+      display: block;
+      height: 80px;
+      width: auto;
     }
   }
 }
-

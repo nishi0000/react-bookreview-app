@@ -1,8 +1,3 @@
-
 export const SignUp = () => {
-
-  return (
-    <p>さいんあっぷがめん</p>
-
-  );
+  return <p>さいんあっぷがめん</p>;
 };

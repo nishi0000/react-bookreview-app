@@ -1,13 +1,9 @@
-
-
 export const Home = () => {
-
-    return (
-      <>
+  return (
+    <>
       <p>ほーむがめん</p>
-
-      </>
-    );
-  };
+    </>
+  );
+};
 
 export default Home;

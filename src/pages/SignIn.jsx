@@ -1,36 +1,59 @@
-// import React, { useState } from "react";
-// import axios from "axios";
-// import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useFormik } from "formik";
+import axios from "axios";
 import "./signin.scss";
 
 export const SignIn = () => {
+  const [emailErrorMessage, setEmailErrorMessage] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
+  const [signInErrorMessage, setSignInErrorMessage] = useState("");
 
-    // validate関数を定義
-    const validate = (values) => {
-      const errors = {};
-  
-      if (!values.email) {
-        errors.email = '入力が必須の項目です。';
-      }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = '正しいメールアドレスの形式ではありません。';}
-      if (!values.password) {
-          errors.password = '入力が必須の項目です。';
-        }
-      return errors;
-    };
-  
-    const { handleChange, handleSubmit, values, errors } = useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-      },
-      onSubmit: (values) => {
-        console.log(values);
-      },
-      validate, // validate:validateの略
-    });
-  
+  const validate = (values) => {
+    const errors = {};
+    if (!values.email) {
+      errors.email = "入力が必須の項目です。";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "正しいメールアドレスの形式ではありません。";
+    }
+    if (!values.password) {
+      errors.password = "入力が必須の項目です。";
+    }
+    return errors;
+  };
+
+  const { handleChange, handleSubmit, values, errors } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      axios
+        .post(
+          `https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/signin`,
+          values,
+        )
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((response) => {
+          console.log(response);
+          setSignInErrorMessage("ログインに失敗しました。");
+        });
+    },
+    validate,
+  });
+
+  const onClickSignInButton = () => {
+    if (errors.email !== "") {
+      setEmailErrorMessage(true);
+    }
+    if (errors.password !== "") {
+      setPasswordErrorMessage(true);
+    }
+  };
 
   return (
     <div>
@@ -38,7 +61,9 @@ export const SignIn = () => {
         <h2>SignIn</h2>
         <p className="error-message"></p>
         <form className="signin-form" onSubmit={handleSubmit}>
-          <label className="email-label" role="label">メールアドレス</label>
+          <label className="email-label" role="label">
+            メールアドレス
+          </label>
           <br />
           <input
             id="email"
@@ -47,8 +72,10 @@ export const SignIn = () => {
             value={values.email}
             onChange={handleChange}
           />
-          {errors.email && <div className="email-errormessage">{errors.email}</div>}
           <br />
+          {emailErrorMessage && (
+            <p className="email-errormessage">{errors.email}</p>
+          )}
           <label className="password-label">パスワード</label>
           <br />
           <input
@@ -61,15 +88,21 @@ export const SignIn = () => {
             autoComplete="off"
           />
           <br />
-          {errors.password && <div className="password-errormessage">{errors.password}</div>}
-          <br />
+          {passwordErrorMessage && (
+            <p className="password-errormessage">{errors.password}</p>
+          )}
           <div className="signin-button-sp">
-            <button type="submit" className="signin-button">
+            <button
+              type="submit"
+              className="signin-button"
+              onClick={onClickSignInButton}
+            >
               サインイン
             </button>
+            {signInErrorMessage && <p>{signInErrorMessage}</p>}
           </div>
         </form>
-        {/* <Link to="/signup">新規作成</Link> */}
+        <Link to="/signup">新規作成</Link>
       </main>
     </div>
   );

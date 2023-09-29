@@ -1,0 +1,34 @@
+@charset "utf-8";
+@import "../_mixin.scss";
+
+.header {
+  width: 100%;
+  height: 80px;
+  background-color: rgb(99 193 120);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo-SP {
+    display: none;
+}
+
+  @include tab {
+    img {
+        width: 250px;
+    }
+
+  }
+
+  @include sp {
+    .logo-PC {
+        display: none;
+    }
+    .logo-SP {
+        display: block;
+        height: 80px;
+        width: auto;
+    }
+  }
+}
+

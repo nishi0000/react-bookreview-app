@@ -35,12 +35,13 @@ export const SignIn = () => {
           `https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/signin`,
           values,
         )
-        .then((response) => {
-          console.log(response.data);
+        .then((res) => {
+          console.log(res.data);
+          setSignInErrorMessage("");
         })
-        .catch((response) => {
-          console.log(response);
-          setSignInErrorMessage("ログインに失敗しました。");
+        .catch((res) => {
+          console.log(res.response.data);
+          setSignInErrorMessage(res.response.data.ErrorMessageJP);
         });
     },
     validate,

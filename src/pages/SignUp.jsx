@@ -8,9 +8,14 @@ export const SignUp = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
   const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
-  const [token,setToken] = useState();
+  const [token, setToken] = useState();
+  const [profileImage, setProfileImage] = useState();
+  const [iconImage, setIconImage] = useState();
+  const iconImageFile = {
+    icon: iconImage,
+  };
 
-  const validate = (values) => {
+  const validate = (values) => {// バリデーション、エラーメッセージの設定
     const errors = {};
     if (!values.name) {
       errors.name = "入力が必須の項目です。";
@@ -26,6 +31,18 @@ export const SignUp = () => {
       errors.password = "入力が必須の項目です。";
     }
     return errors;
+  };
+
+  const onFileInputChange = (e) => {// アップロードする画像を表示する
+    if (e.target.files.length > 0) {// ファイルが選択されていればセット
+      const fileObject = e.target.files[0];
+      setProfileImage(window.URL.createObjectURL(fileObject));
+      setIconImage(fileObject);
+      console.log(profileImage);
+    } else { // ファイルが選択されていなければ空にする
+      setProfileImage("");
+      setIconImage("");
+    }
   };
 
   const { handleChange, handleSubmit, values, errors } = useFormik({
@@ -44,12 +61,28 @@ export const SignUp = () => {
           console.log(res.data);
           setToken(res.data.token);
           setSignUpErrorMessage("");
-          
+          if (iconImageFile !== "") {
+            axios
+            .post(
+              "https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/uploads",
+              iconImageFile,
+              {
+                headers: {
+                  "content-type": "multipart/form-data",
+                  authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTY1NjIyNzgsImlhdCI6MTY5NjQ3NTg3OCwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiMGI2YjFiMTYtMjc1MS00Y2NmLTk1M2ItMTQ1Mzg3MmM3ZTc3In0.qbSFYJImxSCykIm_JrJcRwlzhEfv25D8xXAJotHF5O0`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log(response);
+            });
+          }
+
         })
         .catch((res) => {
           console.log(res.response.data);
           setSignUpErrorMessage(res.response.data.ErrorMessageJP);
-        })
+        });
     },
     validate,
   });
@@ -99,7 +132,9 @@ export const SignUp = () => {
             onChange={handleChange}
           />
           <br />
-          {emailErrorMessage && <p className="email-errormessage">{errors.email}</p>}
+          {emailErrorMessage && (
+            <p className="email-errormessage">{errors.email}</p>
+          )}
           <label className="password-label">パスワード</label>
           <br />
           <input
@@ -114,13 +149,21 @@ export const SignUp = () => {
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
+          <br />
+          <input
+            accept="image/png, image/jpeg"
+            multiple
+            type="file"
+            onChange={onFileInputChange}
+          />
+          <img src={profileImage} />
           <div className="signup-button-sp">
             <button
               type="submit"
               className="signup-button"
               onClick={onClickSignInButton}
             >
-              サインアップ
+              新規登録
             </button>
             {signUpErrorMessage && <p>{signUpErrorMessage}</p>}
           </div>

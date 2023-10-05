@@ -8,6 +8,7 @@ export const SignUp = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
   const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
+  const [token,setToken] = useState();
 
   const validate = (values) => {
     const errors = {};
@@ -41,12 +42,14 @@ export const SignUp = () => {
         )
         .then((res) => {
           console.log(res.data);
+          setToken(res.data.token);
           setSignUpErrorMessage("");
+          
         })
         .catch((res) => {
           console.log(res.response.data);
           setSignUpErrorMessage(res.response.data.ErrorMessageJP);
-        });
+        })
     },
     validate,
   });
@@ -123,6 +126,7 @@ export const SignUp = () => {
           </div>
         </form>
         <Link to="/signin">ログイン</Link>
+        <p>{token}</p>
       </main>
     </div>
   );

@@ -10,10 +10,7 @@ export const SignUp = () => {
   const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
   const [token, setToken] = useState();
   const [profileImage, setProfileImage] = useState();
-  const [iconImage, setIconImage] = useState();
-  const iconImageFile = {
-    icon: iconImage,
-  };
+  const [iconImage, setIconImage] = useState("");
 
   const validate = (values) => {// バリデーション、エラーメッセージの設定
     const errors = {};
@@ -38,12 +35,12 @@ export const SignUp = () => {
       const fileObject = e.target.files[0];
       setProfileImage(window.URL.createObjectURL(fileObject));
       setIconImage(fileObject);
-      console.log(profileImage);
     } else { // ファイルが選択されていなければ空にする
       setProfileImage("");
       setIconImage("");
     }
   };
+
 
   const { handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
@@ -61,15 +58,16 @@ export const SignUp = () => {
           console.log(res.data);
           setToken(res.data.token);
           setSignUpErrorMessage("");
-          if (iconImageFile !== "") {
+
+          if (iconImage !== "") {// 画像ファイルが選択されていれば実行
             axios
             .post(
               "https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/uploads",
-              iconImageFile,
+              {icon:iconImage},
               {
                 headers: {
                   "content-type": "multipart/form-data",
-                  authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTY1NjIyNzgsImlhdCI6MTY5NjQ3NTg3OCwic3ViIjoiNTQ1NDY1NTczNTQiLCJ1c2VyX2lkIjoiMGI2YjFiMTYtMjc1MS00Y2NmLTk1M2ItMTQ1Mzg3MmM3ZTc3In0.qbSFYJImxSCykIm_JrJcRwlzhEfv25D8xXAJotHF5O0`,
+                  authorization: `Bearer ${res.data.token}`,
                 },
               }
             )
@@ -77,8 +75,7 @@ export const SignUp = () => {
               console.log(response);
             });
           }
-
-        })
+        })  
         .catch((res) => {
           console.log(res.response.data);
           setSignUpErrorMessage(res.response.data.ErrorMessageJP);
@@ -86,6 +83,7 @@ export const SignUp = () => {
     },
     validate,
   });
+
 
   const onClickSignInButton = () => {
     if (errors.name !== "") {

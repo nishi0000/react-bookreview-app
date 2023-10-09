@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import "./signin.scss";
+import { url } from "../const";
 
 export const SignIn = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
@@ -32,12 +33,12 @@ export const SignIn = () => {
     onSubmit: (values) => {
       axios
         .post(
-          `https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/signin`,
-          values,
+          `${url}/signin`,
+          values
         )
         .then((res) => {
           console.log(res.data);
-          setSignInErrorMessage("");
+          setSignInErrorMessage("ログインに成功しました！");
         })
         .catch((res) => {
           console.log(res.response.data);
@@ -58,14 +59,12 @@ export const SignIn = () => {
 
   return (
     <div>
-      <main className="signin">
-        <h2>SignIn</h2>
-        <p className="error-message"></p>
+      <main className="signin-main">
+        <h2>ログイン</h2>
         <form className="signin-form" onSubmit={handleSubmit}>
           <label className="email-label" role="label">
             メールアドレス
           </label>
-          <br />
           <input
             id="email"
             name="email"
@@ -73,12 +72,10 @@ export const SignIn = () => {
             value={values.email}
             onChange={handleChange}
           />
-          <br />
           {emailErrorMessage && (
             <p className="email-errormessage">{errors.email}</p>
           )}
           <label className="password-label">パスワード</label>
-          <br />
           <input
             id="password"
             name="password"
@@ -88,22 +85,23 @@ export const SignIn = () => {
             onChange={handleChange}
             autoComplete="off"
           />
-          <br />
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
-          <div className="signin-button-sp">
-            <button
-              type="submit"
-              className="signin-button"
-              onClick={onClickSignInButton}
-            >
-              サインイン
-            </button>
-            {signInErrorMessage && <p>{signInErrorMessage}</p>}
+          <div className="signin-button-container">
+            <Link to="/signup">新規作成</Link>
+
+          <button
+            type="submit"
+            className="signin-button"
+            onClick={onClickSignInButton}
+          >
+            ログイン
+          </button>
           </div>
         </form>
-        <Link to="/signup">新規作成</Link>
+        <br />
+        {signInErrorMessage && <p>{signInErrorMessage}</p>}
       </main>
     </div>
   );

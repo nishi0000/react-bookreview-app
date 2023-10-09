@@ -1,7 +1,10 @@
+import "./signup.scss";
 import axios from "axios";
+import Compressor from "compressorjs";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { url } from "../const";
 
 export const SignUp = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState(false);
@@ -9,10 +12,11 @@ export const SignUp = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
   const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
   const [token, setToken] = useState();
-  const [profileImage, setProfileImage] = useState();
-  const [iconImage, setIconImage] = useState("");
+  const [iconImage, setIconImage] = useState();
+  const [uploadIconImage, setUploadIconImage] = useState("");
 
-  const validate = (values) => {// バリデーション、エラーメッセージの設定
+  const validate = (values) => {
+    // バリデーション、エラーメッセージの設定
     const errors = {};
     if (!values.name) {
       errors.name = "入力が必須の項目です。";
@@ -30,17 +34,28 @@ export const SignUp = () => {
     return errors;
   };
 
-  const onFileInputChange = (e) => {// アップロードする画像を表示する
-    if (e.target.files.length > 0) {// ファイルが選択されていればセット
-      const fileObject = e.target.files[0];
-      setProfileImage(window.URL.createObjectURL(fileObject));
-      setIconImage(fileObject);
-    } else { // ファイルが選択されていなければ空にする
-      setProfileImage("");
+  const onFileInputChange = (e) => {
+    // アップロードする画像を表示する
+    if (e.target.files.length > 0) {
+      // ファイルが選択されていればセット
+      const file = e.target.files[0];
+      new Compressor(file, {
+        quality: 0.6,
+        maxHeight: 200,
+        maxWidth: 200,
+        convertSize: 1000000,
+        success(result) {
+          console.log(result);
+          setIconImage(window.URL.createObjectURL(result));
+          setUploadIconImage(result);
+        },
+      });
+    } else {
+      // ファイルが選択されていなければ空にする
       setIconImage("");
+      setUploadIconImage("");
     }
   };
-
 
   const { handleChange, handleSubmit, values, errors } = useFormik({
     initialValues: {
@@ -50,32 +65,30 @@ export const SignUp = () => {
     },
     onSubmit: (values) => {
       axios
-        .post(
-          `https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/users`,
-          values
-        )
+        .post(`${url}/users`, values)
         .then((res) => {
           console.log(res.data);
           setToken(res.data.token);
-          setSignUpErrorMessage("");
+          setSignUpErrorMessage("新規登録に成功しました！");
 
-          if (iconImage !== "") {// 画像ファイルが選択されていれば実行
+          if (uploadIconImage !== "") {
+            // 画像ファイルが選択されていれば実行
             axios
-            .post(
-              "https://ifrbzeaz2b.execute-api.ap-northeast-1.amazonaws.com/uploads",
-              {icon:iconImage},
-              {
-                headers: {
-                  "content-type": "multipart/form-data",
-                  authorization: `Bearer ${res.data.token}`,
-                },
-              }
-            )
-            .then((response) => {
-              console.log(response);
-            });
+              .post(
+                `${url}/uploads`,
+                { icon: uploadIconImage },
+                {
+                  headers: {
+                    "content-type": "multipart/form-data",
+                    authorization: `Bearer ${res.data.token}`,
+                  },
+                }
+              )
+              .then((response) => {
+                console.log(response);
+              });
           }
-        })  
+        })
         .catch((res) => {
           console.log(res.response.data);
           setSignUpErrorMessage(res.response.data.ErrorMessageJP);
@@ -84,8 +97,8 @@ export const SignUp = () => {
     validate,
   });
 
-
   const onClickSignInButton = () => {
+    // クリック時にエラーメッセージがあればエラーを表示する
     if (errors.name !== "") {
       setNameErrorMessage(true);
     }
@@ -98,77 +111,79 @@ export const SignUp = () => {
   };
 
   return (
-    <div>
-      <main className="signup">
-        <h2>SignUp</h2>
-        <p className="error-message"></p>
+    <>
+      <main className="signup-main">
         <form className="signup-form" onSubmit={handleSubmit}>
-          <label className="name-label" role="label">
-            ユーザーネーム
-          </label>
-          <br />
-          <input
-            id="name"
-            name="name"
-            className="name-input"
-            value={values.name}
-            onChange={handleChange}
-          />
-          <br />
-          {nameErrorMessage && (
-            <p className="name-errormessage">{errors.name}</p>
-          )}
-          <label className="email-label" role="label">
-            メールアドレス
-          </label>
-          <br />
-          <input
-            id="email"
-            name="email"
-            className="email-input"
-            value={values.email}
-            onChange={handleChange}
-          />
-          <br />
-          {emailErrorMessage && (
-            <p className="email-errormessage">{errors.email}</p>
-          )}
-          <label className="password-label">パスワード</label>
-          <br />
-          <input
-            id="password"
-            name="password"
-            type="password"
-            className="password-input"
-            value={values.password}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          {passwordErrorMessage && (
-            <p className="password-errormessage">{errors.password}</p>
-          )}
-          <br />
-          <input
-            accept="image/png, image/jpeg"
-            multiple
-            type="file"
-            onChange={onFileInputChange}
-          />
-          <img src={profileImage} />
-          <div className="signup-button-sp">
-            <button
-              type="submit"
-              className="signup-button"
-              onClick={onClickSignInButton}
-            >
-              新規登録
-            </button>
-            {signUpErrorMessage && <p>{signUpErrorMessage}</p>}
-          </div>
-        </form>
-        <Link to="/signin">ログイン</Link>
+
+              <h2>新規登録</h2>
+              <label className="name-label" role="label">
+                ユーザーネーム
+              </label>
+              <input
+                id="name"
+                name="name"
+                className="name-input"
+                value={values.name}
+                onChange={handleChange}
+              />
+              {nameErrorMessage && (
+                <p className="name-errormessage">{errors.name}</p>
+              )}
+              <label className="email-label" role="label">
+                メールアドレス
+              </label>
+              <input
+                id="email"
+                name="email"
+                className="email-input"
+                value={values.email}
+                onChange={handleChange}
+              />
+              {emailErrorMessage && (
+                <p className="email-errormessage">{errors.email}</p>
+              )}
+              <label className="password-label">パスワード</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                className="password-input"
+                value={values.password}
+                onChange={handleChange}
+                autoComplete="off"
+              />{" "}
+              {passwordErrorMessage && (
+                <p className="password-errormessage">{errors.password}</p>
+              )}
+              <label className="image-label" role="label">
+              アイコン画像の登録
+              </label>
+              <input
+                className="file-input"
+                accept="image/png, image/jpeg"
+                type="file"
+                onChange={onFileInputChange}
+              />
+              {iconImage && <img src={iconImage} className="icon-image" />}
+          <div className="button-container">
+          <Link to="/signin">ログイン</Link>
+          <button
+            type="submit"
+            className="signup-button"
+            onClick={onClickSignInButton}
+          >
+            新規登録
+          </button>
+
+
+        </div>
+        <br />
+        {signUpErrorMessage && <p>{signUpErrorMessage}</p>}
+        <br />
         <p>{token}</p>
+        </form>
+
       </main>
-    </div>
+    </>
   );
 };

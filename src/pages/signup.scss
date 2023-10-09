@@ -1,0 +1,57 @@
+
+.signup-main {
+    width: 320px;
+    margin: 0 auto;
+    padding: 16px;
+    overflow-wrap:break-word;
+}
+
+.name-input, .email-input,.password-input  {
+    width: 320px;
+    font-size: large;
+    margin-top: 0;
+}
+
+.name-label,.email-label, .password-label,.image-label{
+    display: block;
+    margin-top: 16px;
+    height: 200;
+}
+
+.icon-image {
+    display: block;
+    margin: 8px auto 32px;
+}
+
+.signup-button {
+    background-color: rgb(99 193 120);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    transition: .1s;
+    margin: 0;
+    &:hover {
+        opacity: 0.8;
+        transform: translate3d(1px, 5px, 0);
+      }
+}
+
+.signup-container {
+    display: flex;
+}
+.name-errormessage,.password-errormessage,.email-errormessage {
+    color: red;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-input {
+    margin: 8px 0 16px;
+    font-size: medium;
+}
+

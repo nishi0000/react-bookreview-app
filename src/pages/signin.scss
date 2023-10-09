@@ -1,0 +1,45 @@
+
+.signin-main {
+    width: 320px;
+    margin: 0 auto;
+    padding: 16px;
+    overflow-wrap:break-word;
+}
+
+.email-input,.password-input  {
+    width: 320px;
+    font-size: large;
+    margin-top: 0;
+}
+
+.email-label, .password-label {
+    display: block;
+    margin-top: 16px;
+    height: 200;
+}
+
+.password-errormessage,.email-errormessage {
+    color: red;
+}
+
+.signin-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.signin-button {
+    background-color: rgb(99 193 120);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 8px;
+    border: none;
+    transition: .1s;
+    margin: 0;
+    &:hover {
+        opacity: 0.8;
+        transform: translate3d(1px, 5px, 0);
+      }
+
+}

@@ -55,3 +55,15 @@
     font-size: medium;
 }
 
+.password-button-container {
+    display: flex;
+    justify-content: space-between;
+    .password-input{
+        width: 270px;
+        font-size: large;
+        margin-top: 0;
+    }
+    .password-button {
+        width: 45px;
+    }
+}

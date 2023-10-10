@@ -2,7 +2,7 @@ import "./signup.scss";
 import axios from "axios";
 import Compressor from "compressorjs";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { url } from "../const";
 
@@ -14,6 +14,8 @@ export const SignUp = () => {
   const [token, setToken] = useState();
   const [iconImage, setIconImage] = useState();
   const [uploadIconImage, setUploadIconImage] = useState("");
+  const [passwordDisplay, setPasswordDisplay] = useState(false);
+  const inputElementPassword = useRef(null);
 
   const validate = (values) => {
     // バリデーション、エラーメッセージの設定
@@ -110,79 +112,116 @@ export const SignUp = () => {
     }
   };
 
+  // パスワードの表示非表示
+  const onClickPassword = () => {
+    if (inputElementPassword.current.type === "password") {
+      inputElementPassword.current.type = "text";
+      setPasswordDisplay(true);
+    } else {
+      inputElementPassword.current.type = "password";
+      setPasswordDisplay(false);
+    }
+  };
+
+  // パスワード自動生成
+  // const onClickPasswordAutoGenerate = () => {
+  //   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  //   const alphabetUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  //   const numbers = '0123456789';
+
+  //   const passBase  = alphabet + alphabetUpper + numbers;
+
+  //   const len = 8; // 8桁
+  //   let password='';
+
+  //   for (let i = 0; i < len; i++) {
+  //       password += passBase.charAt(Math.floor(Math.random() * passBase.length));
+  //   }
+  //   console.log(password);
+  //   values.password = password;
+
+  // }
+
   return (
     <>
       <main className="signup-main">
         <form className="signup-form" onSubmit={handleSubmit}>
-
-              <h2>新規登録</h2>
-              <label className="name-label" role="label">
-                ユーザーネーム
-              </label>
-              <input
-                id="name"
-                name="name"
-                className="name-input"
-                value={values.name}
-                onChange={handleChange}
-              />
-              {nameErrorMessage && (
-                <p className="name-errormessage">{errors.name}</p>
-              )}
-              <label className="email-label" role="label">
-                メールアドレス
-              </label>
-              <input
-                id="email"
-                name="email"
-                className="email-input"
-                value={values.email}
-                onChange={handleChange}
-              />
-              {emailErrorMessage && (
-                <p className="email-errormessage">{errors.email}</p>
-              )}
-              <label className="password-label">パスワード</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                className="password-input"
-                value={values.password}
-                onChange={handleChange}
-                autoComplete="off"
-              />{" "}
-              {passwordErrorMessage && (
-                <p className="password-errormessage">{errors.password}</p>
-              )}
-              <label className="image-label" role="label">
-              アイコン画像の登録
-              </label>
-              <input
-                className="file-input"
-                accept="image/png, image/jpeg"
-                type="file"
-                onChange={onFileInputChange}
-              />
-              {iconImage && <img src={iconImage} className="icon-image" />}
-          <div className="button-container">
-          <Link to="/signin">ログイン</Link>
+          <h2>新規登録</h2>
+          <label className="name-label" role="label">
+            ユーザーネーム
+          </label>
+          <input
+            id="name"
+            name="name"
+            className="name-input"
+            value={values.name}
+            onChange={handleChange}
+          />
+          {nameErrorMessage && (
+            <p className="name-errormessage">{errors.name}</p>
+          )}
+          <label className="email-label" role="label">
+            メールアドレス
+          </label>
+          <input
+            id="email"
+            name="email"
+            className="email-input"
+            value={values.email}
+            onChange={handleChange}
+          />
+          {emailErrorMessage && (
+            <p className="email-errormessage">{errors.email}</p>
+          )}
+          <label className="password-label">パスワード</label>
+          <div className="password-button-container">
+          <input
+            ref={inputElementPassword}
+            id="password"
+            name="password"
+            type="password"
+            className="password-input"
+            value={values.password}
+            onChange={handleChange}
+            autoComplete="off"
+          />
           <button
-            type="submit"
-            className="signup-button"
-            onClick={onClickSignInButton}
+            onClick={onClickPassword}
+            type="button"
+            className="password-button"
           >
-            新規登録
+            {passwordDisplay ? "非表示" : "表示"}
           </button>
-
-
-        </div>
-        <br />
-        {signUpErrorMessage && <p>{signUpErrorMessage}</p>}
-        <br />
-        <p>{token}</p>
+          </div>
+          {passwordErrorMessage && (
+            <p className="password-errormessage">{errors.password}</p>
+          )}
+          {/* <button type="button" onClick={onClickPasswordAutoGenerate}>パスワード自動生成！</button> */}
+          <label className="image-label" role="label">
+            アイコン画像の登録
+          </label>
+          <input
+            className="file-input"
+            accept="image/png, image/jpeg"
+            type="file"
+            onChange={onFileInputChange}
+          />
+          {iconImage && <img src={iconImage} className="icon-image" />}
+          <div className="button-container">
+            <Link to="/signin">ログイン</Link>
+            <button
+              type="submit"
+              className="signup-button"
+              onClick={onClickSignInButton}
+            >
+              新規登録
+            </button>
+          </div>
+          <br />
+          {signUpErrorMessage && <p>{signUpErrorMessage}</p>}
+          <br />
+          <p>{token}</p>
         </form>
-
       </main>
     </>
   );

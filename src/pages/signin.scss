@@ -6,7 +6,7 @@
     overflow-wrap:break-word;
 }
 
-.email-input,.password-input  {
+.email-input  {
     width: 320px;
     font-size: large;
     margin-top: 0;
@@ -42,4 +42,19 @@
         transform: translate3d(1px, 5px, 0);
       }
 
+}
+
+
+
+.password-button-container {
+    display: flex;
+    justify-content: space-between;
+    .password-input{
+        width: 270px;
+        font-size: large;
+        margin-top: 0;
+    }
+    .password-button {
+        width: 45px;
+    }
 }

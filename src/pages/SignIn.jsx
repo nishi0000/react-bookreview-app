@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
@@ -9,7 +9,10 @@ export const SignIn = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
   const [signInErrorMessage, setSignInErrorMessage] = useState("");
+  const [passwordDisplay, setPasswordDisplay] = useState(false);
+  const inputElementPassword = useRef(null);
 
+  // バリデーションの設定
   const validate = (values) => {
     const errors = {};
     if (!values.email) {
@@ -32,10 +35,7 @@ export const SignIn = () => {
     },
     onSubmit: (values) => {
       axios
-        .post(
-          `${url}/signin`,
-          values
-        )
+        .post(`${url}/signin`, values)
         .then((res) => {
           console.log(res.data);
           setSignInErrorMessage("ログインに成功しました！");
@@ -54,6 +54,17 @@ export const SignIn = () => {
     }
     if (errors.password !== "") {
       setPasswordErrorMessage(true);
+    }
+  };
+
+  // パスワードの表示非表示
+  const onClickPassword = () => {
+    if (inputElementPassword.current.type === "password") {
+      inputElementPassword.current.type = "text";
+      setPasswordDisplay(true);
+    } else {
+      inputElementPassword.current.type = "password";
+      setPasswordDisplay(false);
     }
   };
 
@@ -76,28 +87,34 @@ export const SignIn = () => {
             <p className="email-errormessage">{errors.email}</p>
           )}
           <label className="password-label">パスワード</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            className="password-input"
-            value={values.password}
-            onChange={handleChange}
-            autoComplete="off"
-          />
+          <div className="password-button-container">
+            <input
+              ref={inputElementPassword}
+              id="password"
+              name="password"
+              type="password"
+              className="password-input"
+              value={values.password}
+              onChange={handleChange}
+              autoComplete="off"
+            />
+            <button onClick={onClickPassword} type="button" className="password-button">
+              {passwordDisplay ? "非表示" : "表示"}
+            </button>
+          </div>
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
           <div className="signin-button-container">
             <Link to="/signup">新規作成</Link>
 
-          <button
-            type="submit"
-            className="signin-button"
-            onClick={onClickSignInButton}
-          >
-            ログイン
-          </button>
+            <button
+              type="submit"
+              className="signin-button"
+              onClick={onClickSignInButton}
+            >
+              ログイン
+            </button>
           </div>
         </form>
         <br />

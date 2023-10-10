@@ -10,17 +10,26 @@
 
 .review {
     background-color: #EEEEEE;
+    overflow-wrap:break-word;
     &__title {
         font-size: 20px;
     }
     &__detail {
         font-size: 16px;
+        margin-top: 8px;
     }
+
     &__comment {
         font-size: 16px;
+        margin-top: 4px;
+    }
+    &__url {
+        float: left;
+        margin-top: 8px;
     }
     &__reviewer {
         font-size: 14px;
+        margin-top: 8px;
         text-align: right;
     }
 }
@@ -28,6 +37,6 @@
 .review-column {
     margin: 16px auto;
     width: 750px;
-    padding: 16px;
+    padding: 24px 32px;
 }
 

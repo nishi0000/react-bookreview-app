@@ -32,7 +32,6 @@ export const Home = () => {
             <h3 key={index} className="review__title">タイトル：{data.title}</h3>
             <p className="review__detail">あらすじ:{data.detail}</p>
             <p className="review__comment" >レビュー:{data.review}</p>
-            <p className="review__url">URL:{data.url}</p>
             <p className="review__reviewer">レビュワー：{data.reviewer}</p>
             </div>
           );}))}

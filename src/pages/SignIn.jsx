@@ -98,7 +98,11 @@ export const SignIn = () => {
               onChange={handleChange}
               autoComplete="off"
             />
-            <button onClick={onClickPassword} type="button" className="password-button">
+            <button
+              onClick={onClickPassword}
+              type="button"
+              className="password-button"
+            >
               {passwordDisplay ? "非表示" : "表示"}
             </button>
           </div>

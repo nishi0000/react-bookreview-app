@@ -84,7 +84,7 @@ export const SignUp = () => {
                     "content-type": "multipart/form-data",
                     authorization: `Bearer ${res.data.token}`,
                   },
-                }
+                },
               )
               .then((response) => {
                 console.log(response);
@@ -179,24 +179,24 @@ export const SignUp = () => {
           )}
           <label className="password-label">パスワード</label>
           <div className="password-button-container">
-          <input
-            ref={inputElementPassword}
-            id="password"
-            name="password"
-            type="password"
-            className="password-input"
-            value={values.password}
-            // value={passwordGenerate}
-            onChange={handleChange}
-            autoComplete="off"
-          />
-          <button
-            onClick={onClickPassword}
-            type="button"
-            className="password-button"
-          >
-            {passwordDisplay ? "非表示" : "表示"}
-          </button>
+            <input
+              ref={inputElementPassword}
+              id="password"
+              name="password"
+              type="password"
+              className="password-input"
+              value={values.password}
+              // value={passwordGenerate}
+              onChange={handleChange}
+              autoComplete="off"
+            />
+            <button
+              onClick={onClickPassword}
+              type="button"
+              className="password-button"
+            >
+              {passwordDisplay ? "非表示" : "表示"}
+            </button>
           </div>
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>

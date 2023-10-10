@@ -2,7 +2,6 @@
 @import "../_mixin.scss";
 
 .header {
-  width: 100%;
   height: 80px;
   background-color: rgb(99 193 120);
   color: #ffffff;
@@ -14,10 +13,24 @@
 .header-logo {
   color: #ffffff;
   text-decoration: none;
+  @include tab {
+    font-size: 24px;
+  }
+  @include sp {
+    display: none;
+  }
+}
+
+.header-logo-sp {
+  display: none;
+  @include sp {
+    display: inline;
+    font-size: 16px;
+  }
 }
 
 .signin-link {
   color: #ffffff;
-  text-decoration:none;
+  text-decoration: none;
   margin: 0 16px;
 }

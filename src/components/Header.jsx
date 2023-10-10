@@ -7,8 +7,17 @@ export const Header = () => {
     <header className="header">
       <Link to="/" className="signin-link">
         <h1 className="header-logo">Book Review Web</h1>
+        <h1 className="header-logo-sp">
+          Book
+          <br />
+          Review
+          <br />
+          Web
+        </h1>
       </Link>
-      <Link to="signin" className="signin-link">ログイン</Link>
+      <Link to="signin" className="signin-link">
+        ログイン
+      </Link>
     </header>
   );
 };

@@ -5,7 +5,7 @@ import "./home.scss";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();
-  const [loading,setLoading] =useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -23,19 +23,24 @@ export const Home = () => {
   return (
     <>
       <h2 className="title title-column">Book Review List</h2>
-        {!loading ? (<p>ロード中</p>):
-        (
-        bookReviewData.map((data,index)=>{
+      {!loading ? (
+        <p>ロード中</p>
+      ) : (
+        bookReviewData.map((data, index) => {
           console.log(data);
-          return(
+          return (
             <div className="review review-column">
-            <h3 key={index} className="review__title">タイトル：{data.title}</h3>
-            <p className="review__detail">あらすじ:{data.detail}</p>
-            <p className="review__comment" >レビュー:{data.review}</p>
-            <p className="review__url">URL:{data.url}</p>
-            <p className="review__reviewer">レビュワー：{data.reviewer}</p>
+              <h3 key={index} className="review__title">
+                タイトル：{data.title}
+              </h3>
+              <p className="review__detail">あらすじ:{data.detail}</p>
+              <p className="review__comment">レビュー:{data.review}</p>
+              <p className="review__url">URL:{data.url}</p>
+              <p className="review__reviewer">レビュワー：{data.reviewer}</p>
             </div>
-          );}))}
+          );
+        })
+      )}
     </>
   );
 };

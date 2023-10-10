@@ -123,7 +123,10 @@ export const SignUp = () => {
     }
   };
 
+  // const [passwordGenerate,setPasswordGenerate] = useState("");
+
   // パスワード自動生成
+
   // const onClickPasswordAutoGenerate = () => {
   //   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
   //   const alphabetUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -138,7 +141,8 @@ export const SignUp = () => {
   //       password += passBase.charAt(Math.floor(Math.random() * passBase.length));
   //   }
   //   console.log(password);
-  //   values.password = password;
+  //   setPasswordGenerate(password);
+  //   values.password = passwordGenerate;
 
   // }
 
@@ -182,6 +186,7 @@ export const SignUp = () => {
             type="password"
             className="password-input"
             value={values.password}
+            // value={passwordGenerate}
             onChange={handleChange}
             autoComplete="off"
           />
@@ -196,7 +201,8 @@ export const SignUp = () => {
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
-          {/* <button type="button" onClick={onClickPasswordAutoGenerate}>パスワード自動生成！</button> */}
+          {/* <button type="button" onClick={onClickPasswordAutoGenerate}>パスワード自動生成！</button>
+          <p>{passwordGenerate}</p> */}
           <label className="image-label" role="label">
             アイコン画像の登録
           </label>

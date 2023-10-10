@@ -1,6 +1,7 @@
 import axios from "axios";
 import { url } from "../const";
 import { useEffect, useState } from "react";
+import "./home.scss";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();// eslint-disable-line no-unused-vars
@@ -21,21 +22,19 @@ export const Home = () => {
 
   return (
     <>
-      <p>ほーむ画面</p>
-      <ul>
+      <h2 className="title title-column">Book Review List</h2>
         {!loading ? (<p>ロード中</p>):
         (
         bookReviewData.map((data,index)=>{
           console.log(data);
           return(
-            <>
-            <li key={index}>タイトル：{data.title}</li>
-            <p>あらすじ:{data.detail}</p>
-            <p>レビュー:{data.review}</p>
-            <p>レビュワー：{data.reviewer}</p>
-            </>
+            <div className="review review-column">
+            <h3 key={index} className="review__title">タイトル：{data.title}</h3>
+            <p className="review__detail">あらすじ:{data.detail}</p>
+            <p className="review__comment" >レビュー:{data.review}</p>
+            <p className="review__reviewer">レビュワー：{data.reviewer}</p>
+            </div>
           );}))}
-      </ul>
     </>
   );
 };

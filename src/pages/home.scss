@@ -1,0 +1,33 @@
+
+.title{
+    font-size: 24px;
+}
+
+.title-column {
+    text-align: center;
+    margin: 16px;
+}
+
+.review {
+    background-color: #EEEEEE;
+    &__title {
+        font-size: 20px;
+    }
+    &__detail {
+        font-size: 16px;
+    }
+    &__comment {
+        font-size: 16px;
+    }
+    &__reviewer {
+        font-size: 14px;
+        text-align: right;
+    }
+}
+
+.review-column {
+    margin: 16px auto;
+    width: 750px;
+    padding: 16px;
+}
+

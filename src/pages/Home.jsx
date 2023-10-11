@@ -22,9 +22,9 @@ export const Home = () => {
 
   return (
     <>
-      <h2 className="title title-column">Book Review List</h2>
+      <h2 className="home-title title-column">Book Review List</h2>
       {!loading ? (
-        <p>ロード中</p>
+        <p className="review__loading">ロード中</p>
       ) : (
         bookReviewData.map((data, index) => {
           console.log(data);

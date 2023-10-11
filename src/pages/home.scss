@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import "../_mixin.scss";
 
-.title {
+.home-title {
   font-size: 24px;
 }
 
@@ -13,6 +13,10 @@
 .review {
   background-color: #eeeeee;
   overflow-wrap: break-word;
+
+  &__loading{
+    text-align: center;
+  }
 
   &__title {
     font-size: 20px;

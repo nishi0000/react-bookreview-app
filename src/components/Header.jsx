@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 export const Header = () => {
   return (
     <header className="header">
-      <Link to="/" className="signin-link">
-        <h1 className="header-logo">Book Review Web</h1>
-        <h1 className="header-logo-sp">
+      <Link to="/" className="header__nav">
+        <h1 className="header__logo">Book Review Web</h1>
+        <h1 className="header__logo-sp">
           Book
           <br />
           Review
@@ -15,7 +15,7 @@ export const Header = () => {
           Web
         </h1>
       </Link>
-      <Link to="signin" className="signin-link">
+      <Link to="signin" className="header__nav">
         ログイン
       </Link>
     </header>

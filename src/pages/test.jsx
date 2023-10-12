@@ -17,7 +17,7 @@ export const Test = () => {
       .then((res) => {
         console.log(res);
         setName(res.data.name);
-        setImageUrl(res.data.url);
+        setImageUrl(res.data.iconUrl);
       })
       .catch((res) => {
         console.log(res);

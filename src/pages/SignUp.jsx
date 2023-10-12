@@ -12,7 +12,6 @@ export const SignUp = () => {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState(false);
   const [signUpErrorMessage, setSignUpErrorMessage] = useState("");
   const [token, setToken] = useState();
-  const [iconImage, setIconImage] = useState();
   const [uploadIconImage, setUploadIconImage] = useState("");
   const [passwordDisplay, setPasswordDisplay] = useState(false);
   const inputElementPassword = useRef(null);
@@ -41,20 +40,20 @@ export const SignUp = () => {
     if (e.target.files.length > 0) {
       // ファイルが選択されていればセット
       const file = e.target.files[0];
+      console.log(e.target.files[0]);
       new Compressor(file, {
         quality: 0.6,
         maxHeight: 200,
         maxWidth: 200,
         convertSize: 1000000,
         success(result) {
-          console.log(result);
-          setIconImage(window.URL.createObjectURL(result));
-          setUploadIconImage(result);
+          const resultfile = new File([result],`${result.name}`,{ type: `${result.type}` })
+          console.log(resultfile);
+          setUploadIconImage(resultfile);
         },
       });
     } else {
       // ファイルが選択されていなければ空にする
-      setIconImage("");
       setUploadIconImage("");
     }
   };
@@ -100,7 +99,7 @@ export const SignUp = () => {
   });
 
   const onClickSignInButton = () => {
-    // クリック時にエラーメッセージがあればエラーを表示する
+    // クリック時にエラーがあればエラーを表示する
     if (errors.name !== "") {
       setNameErrorMessage(true);
     }
@@ -212,7 +211,7 @@ export const SignUp = () => {
             type="file"
             onChange={onFileInputChange}
           />
-          {iconImage && <img src={iconImage} className="icon-image" />}
+          {uploadIconImage && <img src={window.URL.createObjectURL(uploadIconImage)} className="icon-image" />}
           <div className="button-container">
             <Link to="/signin">ログイン</Link>
             <button

@@ -1,9 +1,7 @@
-import { useSelector } from "react-redux";
 import "./header.scss";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
-  const auth = useSelector((state) => state.auth.isSignIn);
 
   return (
     <header className="header">
@@ -17,12 +15,9 @@ export const Header = () => {
           Web
         </h1>
       </Link>
-      {auth ? (<Link to="signin" className="header__nav">
-        げすとさま ログイン
-      </Link>):(<Link to="signin" className="header__nav">
+      <Link to="signin" className="header__nav">
         ログイン
-      </Link>)}
-      
+      </Link>
     </header>
   );
 };

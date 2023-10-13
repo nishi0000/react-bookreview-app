@@ -2,17 +2,15 @@ import axios from "axios";
 import { url } from "../const";
 import { useEffect, useState } from "react";
 import "./home.scss";
-import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
-export const Home = () => {
+export const SignInHome = () => {
   const [bookReviewData, setBookReviewData] = useState();
   const [loading, setLoading] = useState(false);
-  const auth = useSelector((state) => state.auth.isSignIn);
   const [cookies] = useCookies();
 
-  if (auth) {
-    useEffect(() => {
+
+  useEffect(() => {
       axios
         .get(`${url}/books`, {
           headers: {
@@ -27,21 +25,10 @@ export const Home = () => {
         .catch((res) => {
           console.log(res.response.data);
         });
-    }, []);
-  } else {
-    useEffect(() => {
-      axios
-        .get(`${url}/public/books`)
-        .then((res) => {
-          console.log(res.data);
-          setBookReviewData(res.data);
-          setLoading(true);
-        })
-        .catch((res) => {
-          console.log(res.response.data);
-        });
-    }, []);
-  }
+  }, []);
+
+
+
 
   return (
     <>
@@ -68,4 +55,4 @@ export const Home = () => {
   );
 };
 
-export default Home;
+export default SignInHome;

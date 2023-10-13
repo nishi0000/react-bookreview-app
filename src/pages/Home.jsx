@@ -2,18 +2,21 @@ import axios from "axios";
 import { url } from "../const";
 import { useEffect, useState } from "react";
 import "./home.scss";
+import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();
   const [loading, setLoading] = useState(false);
+  const auth = useSelector((state) => state.auth.isSignIn);
   const [cookies] = useCookies();
 
-
-  useEffect(() => {
+  if (auth) {
+    useEffect(() => {
       axios
         .get(`${url}/books`, {
           headers: {
+            "content-type": "multipart/form-data",
             authorization: `Bearer ${cookies.token}`,
           },
         })
@@ -25,10 +28,21 @@ export const Home = () => {
         .catch((res) => {
           console.log(res.response.data);
         });
-  }, []);
-
-
-
+    }, []);
+  } else {
+    useEffect(() => {
+      axios
+        .get(`${url}/public/books`)
+        .then((res) => {
+          console.log(res.data);
+          setBookReviewData(res.data);
+          setLoading(true);
+        })
+        .catch((res) => {
+          console.log(res.response.data);
+        });
+    }, []);
+  }
 
   return (
     <>

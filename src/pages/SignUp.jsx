@@ -3,8 +3,11 @@ import axios from "axios";
 import Compressor from "compressorjs";
 import { useFormik } from "formik";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { url } from "../const";
+import { useSelector, useDispatch } from "react-redux";
+import { signIn } from "../features/AuthSlice";
+import { useCookies } from "react-cookie";
 
 export const SignUp = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState(false);
@@ -15,6 +18,10 @@ export const SignUp = () => {
   const [uploadIconImage, setUploadIconImage] = useState("");
   const [passwordDisplay, setPasswordDisplay] = useState(false);
   const inputElementPassword = useRef(null);
+  const auth = useSelector((state) => state.auth.isSignIn);
+  const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
 
   const validate = (values) => {
     // バリデーション、エラーメッセージの設定
@@ -47,7 +54,9 @@ export const SignUp = () => {
         maxWidth: 200,
         convertSize: 1000000,
         success(result) {
-          const resultfile = new File([result],`${result.name}`,{ type: `${result.type}` })
+          const resultfile = new File([result], `${result.name}`, {
+            type: `${result.type}`,
+          });
           console.log(resultfile);
           setUploadIconImage(resultfile);
         },
@@ -70,7 +79,10 @@ export const SignUp = () => {
         .then((res) => {
           console.log(res.data);
           setToken(res.data.token);
-          setSignUpErrorMessage("新規登録に成功しました！");
+          setSignUpErrorMessage("");
+          dispatch(signIn());
+          setCookie("token", res.data.token);
+          Navigate("/"); 
 
           if (uploadIconImage !== "") {
             // 画像ファイルが選択されていれば実行
@@ -83,12 +95,17 @@ export const SignUp = () => {
                     "content-type": "multipart/form-data",
                     authorization: `Bearer ${res.data.token}`,
                   },
-                },
+                }
               )
               .then((response) => {
                 console.log(response);
               });
           }
+        })
+        .then(() => {
+          dispatch(signIn());
+          Navigate("/");      
+          console.log(auth);
         })
         .catch((res) => {
           console.log(res.response.data);
@@ -211,7 +228,12 @@ export const SignUp = () => {
             type="file"
             onChange={onFileInputChange}
           />
-          {uploadIconImage && <img src={window.URL.createObjectURL(uploadIconImage)} className="icon-image" />}
+          {uploadIconImage && (
+            <img
+              src={window.URL.createObjectURL(uploadIconImage)}
+              className="icon-image"
+            />
+          )}
           <div className="button-container">
             <Link to="/signin">ログイン</Link>
             <button

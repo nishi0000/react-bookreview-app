@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import "./signin.scss";
 import { url } from "../const";
+import { useDispatch } from "react-redux";
+import { signIn } from "../features/AuthSlice";
+import { useCookies } from "react-cookie";
 
 export const SignIn = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
@@ -11,6 +14,9 @@ export const SignIn = () => {
   const [signInErrorMessage, setSignInErrorMessage] = useState("");
   const [passwordDisplay, setPasswordDisplay] = useState(false);
   const inputElementPassword = useRef(null);
+  const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
 
   // バリデーションの設定
   const validate = (values) => {
@@ -38,7 +44,10 @@ export const SignIn = () => {
         .post(`${url}/signin`, values)
         .then((res) => {
           console.log(res.data);
-          setSignInErrorMessage("ログインに成功しました！");
+          setSignInErrorMessage("");
+          dispatch(signIn());
+          setCookie("token", res.data.token);
+          Navigate("/"); 
         })
         .catch((res) => {
           console.log(res.response.data);
@@ -56,6 +65,11 @@ export const SignIn = () => {
       setPasswordErrorMessage(true);
     }
   };
+
+
+  const test = ()=> {
+    removeCookie("token");
+  }
 
   // パスワードの表示非表示
   const onClickPassword = () => {
@@ -119,6 +133,8 @@ export const SignIn = () => {
             >
               ログイン
             </button>
+            
+    <button onClick={test}>くっきーさくじょ</button>
           </div>
         </form>
         <br />

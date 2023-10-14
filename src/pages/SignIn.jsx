@@ -47,7 +47,17 @@ export const SignIn = () => {
           setSignInErrorMessage("");
           dispatch(signIn());
           setCookie("token", res.data.token);
-          Navigate("/"); 
+          Navigate("/");
+          axios
+            .get(`${url}/users`, {
+              headers: {
+                authorization: `Bearer ${res.data.token}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              setCookie("name", res.data.name);
+            });
         })
         .catch((res) => {
           console.log(res.response.data);
@@ -66,10 +76,9 @@ export const SignIn = () => {
     }
   };
 
-
-  const test = ()=> {
+  const test = () => {
     removeCookie("token");
-  }
+  };
 
   // パスワードの表示非表示
   const onClickPassword = () => {
@@ -133,8 +142,8 @@ export const SignIn = () => {
             >
               ログイン
             </button>
-            
-    <button onClick={test}>くっきーさくじょ</button>
+
+            <button onClick={test}>くっきーさくじょ</button>
           </div>
         </form>
         <br />

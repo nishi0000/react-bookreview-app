@@ -11,8 +11,8 @@ export const Home = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
   const [cookies] = useCookies();
 
-  if (auth) {
-    useEffect(() => {
+  useEffect(() => {
+    if (auth) {
       axios
         .get(`${url}/books`, {
           headers: {
@@ -27,9 +27,7 @@ export const Home = () => {
         .catch((res) => {
           console.log(res.response.data);
         });
-    }, []);
-  } else {
-    useEffect(() => {
+    } else {
       axios
         .get(`${url}/public/books`)
         .then((res) => {
@@ -40,8 +38,8 @@ export const Home = () => {
         .catch((res) => {
           console.log(res.response.data);
         });
-    }, []);
-  }
+    }
+  }, []);
 
   return (
     <>
@@ -50,12 +48,9 @@ export const Home = () => {
         <p className="review__loading">ロード中</p>
       ) : (
         bookReviewData.map((data, index) => {
-          console.log(data);
           return (
-            <div className="review review-column">
-              <h3 key={index} className="review__title">
-                タイトル：{data.title}
-              </h3>
+            <div key={index} className="review review-column">
+              <h3 className="review__title">タイトル：{data.title}</h3>
               <p className="review__detail">あらすじ:{data.detail}</p>
               <p className="review__comment">レビュー:{data.review}</p>
               <p className="review__url">URL:{data.url}</p>

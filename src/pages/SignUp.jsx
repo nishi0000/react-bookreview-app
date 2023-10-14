@@ -92,7 +92,7 @@ export const SignUp = () => {
                     "content-type": "multipart/form-data",
                     authorization: `Bearer ${res.data.token}`,
                   },
-                }
+                },
               )
               .then((response) => {
                 console.log(response);
@@ -101,7 +101,7 @@ export const SignUp = () => {
         })
         .then(() => {
           dispatch(signIn());
-          Navigate("/");      
+          Navigate("/");
         })
         .catch((res) => {
           console.log(res.response.data);

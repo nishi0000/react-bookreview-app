@@ -41,6 +41,7 @@ export const Home = () => {
           console.log(res.data);
           setBookReviewData(res.data);
           setLoading(true);
+          dispatch(pageNumberGet(res.data.length));
         })
         .catch((res) => {
           console.log(res.response.data);

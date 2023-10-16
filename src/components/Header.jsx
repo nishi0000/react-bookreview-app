@@ -34,7 +34,7 @@ export const Header = () => {
         </h1>
       </Link>
       {auth && 
-        <Link to="signin" className="header__nav header__gest">
+        <Link to="profile" className="header__nav header__gest">
           {name}様
         </Link>}
 
@@ -45,7 +45,7 @@ export const Header = () => {
         <Link to="signin" onClick={onClickSignOut} className="header__nav">
         <SignOutIcons />
         </Link>
-        <Link to="signin" onClick={onClickSignOut} className="header__nav">
+        <Link to="profile" className="header__nav">
         <UserIcons />
         </Link>
         <Link to="signin" onClick={onClickSignOut} className="header__nav">

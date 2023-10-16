@@ -5,14 +5,16 @@ const cookie = new Cookies();
 
 const initialState = {
   isSignIn: cookie.get("token") !== undefined,
+  userToken: cookie.get("token"),
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signIn: (state) => {
+    signIn: (state,action) => {
       state.isSignIn = true;
+      state.userToken = action.payload;
     },
     signOut: (state) => {
       state.isSignIn = false;

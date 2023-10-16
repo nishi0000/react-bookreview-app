@@ -47,7 +47,7 @@ export const SignIn = () => {
         .then((res) => {
           console.log(res.data);
           setSignInErrorMessage("");
-          dispatch(signIn());// ログイン処理
+          dispatch(signIn(res.data.token));// ログイン処理
           dispatch(pageTop());// ログインに成功したらレビュートップに行くように
           setCookie("token", res.data.token);
           Navigate("/");

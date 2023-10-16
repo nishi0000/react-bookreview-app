@@ -82,6 +82,7 @@ export const SignUp = () => {
           setToken(res.data.token);
           setSignUpErrorMessage("");
           setCookie("token", res.data.token);// tokenをクッキーにセット
+          dispatch(signIn(res.data.token)); // ログイン処理
           axios
           .get(`${url}/users`, {
             headers: {
@@ -113,7 +114,6 @@ export const SignUp = () => {
           }
         })
         .then(() => {
-          dispatch(signIn()); // ログイン処理
           dispatch(pageTop()); // ページ遷移時トップページに行く
           Navigate("/");
         })

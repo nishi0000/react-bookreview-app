@@ -80,10 +80,6 @@ export const SignIn = () => {
     }
   };
 
-  const test = () => {
-    removeCookie("token");
-  };
-
   // パスワードの表示非表示
   const onClickPassword = () => {
     if (inputElementPassword.current.type === "password") {
@@ -146,8 +142,6 @@ export const SignIn = () => {
             >
               ログイン
             </button>
-
-            <button onClick={test}>くっきーさくじょ</button>
           </div>
         </form>
         <br />

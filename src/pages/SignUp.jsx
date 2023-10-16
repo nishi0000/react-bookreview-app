@@ -82,7 +82,7 @@ export const SignUp = () => {
           setToken(res.data.token);
           setSignUpErrorMessage("");
           setCookie("token", res.data.token);// tokenをクッキーにセット
-          axios// header表示用にゲストの名前をセット
+          axios
           .get(`${url}/users`, {
             headers: {
               authorization: `Bearer ${res.data.token}`,

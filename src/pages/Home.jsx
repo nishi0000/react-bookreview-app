@@ -2,24 +2,21 @@ import axios from "axios";
 import { url } from "../const";
 import { useEffect, useState } from "react";
 import "./home.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { Pagination } from "../components/Pagination";
-import { pageNumberGet } from "../features/PageSlice";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();
   const [loading, setLoading] = useState(false);
   const auth = useSelector((state) => state.auth.isSignIn);
   const page = useSelector((state) => state.page.pageIndex);
-  const dispatch = useDispatch();
-
   const [cookies] = useCookies();
 
   useEffect(() => {
-    if (auth) {
+    if (auth) {// ログイン済なら認証が必要なレビューページへ
       axios
-        .get(`${url}/books/?offset=${page}`, {
+        .get(`${url}/books?offset=${page}`, {
           headers: {
             authorization: `Bearer ${cookies.token}`,
           },
@@ -28,26 +25,23 @@ export const Home = () => {
           console.log(res.data);
           setBookReviewData(res.data);
           setLoading(true);
-          dispatch(pageNumberGet(res.data.length));
-
         })
         .catch((res) => {
           console.log(res.response.data);
         });
-    } else {
+    } else {// 未ログインなら認証が不要なレビューページへ
       axios
         .get(`${url}/public/books?offset=${page}`)
         .then((res) => {
           console.log(res.data);
           setBookReviewData(res.data);
           setLoading(true);
-          dispatch(pageNumberGet(res.data.length));
         })
         .catch((res) => {
           console.log(res.response.data);
         });
     }
-  }, [page]);
+  }, [page]);// pageが更新されるたびに取得する
 
   return (
     <>

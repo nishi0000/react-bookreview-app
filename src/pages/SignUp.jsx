@@ -8,6 +8,8 @@ import { url } from "../const";
 import { useDispatch } from "react-redux";
 import { signIn } from "../features/AuthSlice";
 import { useCookies } from "react-cookie";
+import { pageTop } from "../features/PageSlice";
+import { userNameGet } from "../features/UserSlice";
 
 export const SignUp = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState(false);
@@ -72,14 +74,25 @@ export const SignUp = () => {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
+    onSubmit: (values) => {// 新規登録する
       axios
         .post(`${url}/users`, values)
         .then((res) => {
           console.log(res.data);
           setToken(res.data.token);
           setSignUpErrorMessage("");
-          setCookie("token", res.data.token);
+          setCookie("token", res.data.token);// tokenをクッキーにセット
+          axios// header表示用にゲストの名前をセット
+          .get(`${url}/users`, {
+            headers: {
+              authorization: `Bearer ${res.data.token}`,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            setCookie("name", res.data.name);
+            dispatch(userNameGet(res.data.name));
+          });
 
           if (uploadIconImage !== "") {
             // 画像ファイルが選択されていれば実行
@@ -100,7 +113,8 @@ export const SignUp = () => {
           }
         })
         .then(() => {
-          dispatch(signIn());
+          dispatch(signIn()); // ログイン処理
+          dispatch(pageTop()); // ページ遷移時トップページに行く
           Navigate("/");
         })
         .catch((res) => {
@@ -134,29 +148,6 @@ export const SignUp = () => {
       setPasswordDisplay(false);
     }
   };
-
-  // const [passwordGenerate,setPasswordGenerate] = useState("");
-
-  // パスワード自動生成
-
-  // const onClickPasswordAutoGenerate = () => {
-  //   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  //   const alphabetUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  //   const numbers = '0123456789';
-
-  //   const passBase  = alphabet + alphabetUpper + numbers;
-
-  //   const len = 8; // 8桁
-  //   let password='';
-
-  //   for (let i = 0; i < len; i++) {
-  //       password += passBase.charAt(Math.floor(Math.random() * passBase.length));
-  //   }
-  //   console.log(password);
-  //   setPasswordGenerate(password);
-  //   values.password = passwordGenerate;
-
-  // }
 
   return (
     <>
@@ -213,8 +204,6 @@ export const SignUp = () => {
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
-          {/* <button type="button" onClick={onClickPasswordAutoGenerate}>パスワード自動生成！</button>
-          <p>{passwordGenerate}</p> */}
           <label className="image-label" role="label">
             アイコン画像の登録
           </label>

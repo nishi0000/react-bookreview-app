@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   pageIndex: 0,
-  pageNumber:0,
 };
 
 export const pageSlice = createSlice({
@@ -18,10 +17,7 @@ export const pageSlice = createSlice({
     pageTop:(state)=>{
         state.pageIndex = 0;
     },
-    pageNumberGet:(state,number)=>{
-      state.pageNumber = number;
-    },
   },
 });
 
-export const { pageMove, pageBack,pageTop,pageNumberGet } = pageSlice.actions;
+export const { pageMove, pageBack,pageTop} = pageSlice.actions;

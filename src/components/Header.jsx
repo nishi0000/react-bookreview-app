@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import "./header.scss";
-import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { Link, } from "react-router-dom";
 
 export const Header = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
-  const [cookies] = useCookies();
+  const name = useSelector((state) => state.name.userName);
 
   return (
     <header className="header">
@@ -21,11 +20,11 @@ export const Header = () => {
       </Link>
       {auth ? (
         <Link to="signin" className="header__nav">
-          {cookies.name}さま ログイン
+          {name}様
         </Link>
       ) : (
         <Link to="signin" className="header__nav">
-          ログイン
+         ログイン
         </Link>
       )}
     </header>

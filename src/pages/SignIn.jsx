@@ -7,6 +7,8 @@ import { url } from "../const";
 import { useDispatch } from "react-redux";
 import { signIn } from "../features/AuthSlice";
 import { useCookies } from "react-cookie";
+import { pageTop } from "../features/PageSlice";
+import { userNameGet } from "../features/UserSlice";
 
 export const SignIn = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
@@ -45,10 +47,11 @@ export const SignIn = () => {
         .then((res) => {
           console.log(res.data);
           setSignInErrorMessage("");
-          dispatch(signIn());
+          dispatch(signIn());// ログイン処理
+          dispatch(pageTop());// ログインに成功したらレビュートップに行くように
           setCookie("token", res.data.token);
           Navigate("/");
-          axios
+          axios// ユーザー情報を取得・セットする
             .get(`${url}/users`, {
               headers: {
                 authorization: `Bearer ${res.data.token}`,
@@ -56,7 +59,8 @@ export const SignIn = () => {
             })
             .then((res) => {
               console.log(res);
-              setCookie("name", res.data.name);
+              setCookie("name", res.data.name);// データ保持のためクッキーにセット
+              dispatch(userNameGet(res.data.name));// グローバルステートにセット
             });
         })
         .catch((res) => {

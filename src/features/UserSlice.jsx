@@ -4,17 +4,17 @@ import { Cookies } from "react-cookie";
 const cookie = new Cookies();
 
 const initialState = {
-  userName: cookie.get("name") !== "ゲスト",
+  userName: cookie.get("name"),
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    userNameGet: (state,name) => {
-        state.userName = name;
+    userNameGet: (state,action) => {
+        state.userName = action.payload;
       },
   },
 });
 
-export const { signIn, signOut } = userSlice.actions;
+export const { userNameGet } = userSlice.actions;

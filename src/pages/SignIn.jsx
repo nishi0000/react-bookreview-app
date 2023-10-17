@@ -9,6 +9,7 @@ import { signIn } from "../features/AuthSlice";
 import { useCookies } from "react-cookie";
 import { pageTop } from "../features/PageSlice";
 import { userNameGet } from "../features/UserSlice";
+import { SignInCheck } from "../components/SignInCheck";
 
 export const SignIn = () => {
   const [emailErrorMessage, setEmailErrorMessage] = useState(false);
@@ -17,8 +18,11 @@ export const SignIn = () => {
   const [passwordDisplay, setPasswordDisplay] = useState(false);
   const inputElementPassword = useRef(null);
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
+  // const auth = useSelector((state) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
+
+  SignInCheck();
 
   // バリデーションの設定
   const validate = (values) => {
@@ -70,6 +74,7 @@ export const SignIn = () => {
     },
     validate,
   });
+
 
   const onClickSignInButton = () => {
     if (errors.email !== "") {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { url } from "../const";
 import { useDispatch, useSelector } from "react-redux";
 import { userNameGet } from "../features/UserSlice";
+import { SignOutCheck } from "../components/SignInCheck";
 
 
 export const Profile = () => {
@@ -10,8 +11,11 @@ export const Profile = () => {
     const [userIcon,setUserIcon] = useState("");
     const token = useSelector((state) => state.auth.userToken);
     const dispatch = useDispatch();
+    
+    SignOutCheck();
 
     useEffect(() => {
+      if(token){
     axios// ユーザー情報を取得・セットする
     .get(`${url}/users`, {
       headers: {
@@ -22,7 +26,7 @@ export const Profile = () => {
       console.log(res);
       setUserName(res.data.name);
       setUserIcon(res.data.iconUrl);
-    });
+    });}
 }, []);
 
 

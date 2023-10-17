@@ -7,7 +7,7 @@ import { BookIcons, SignOutIcons, UserIcons } from "./Heroicons";
 import { useState } from "react";
 
 export const Header = () => {
-  const [naviText, setNaviText] = useState(""); // eslint-disable-line no-unused-vars
+  const [naviText, setNaviText] = useState("");
   const auth = useSelector((state) => state.auth.isSignIn);
   const name = useSelector((state) => state.name.userName);
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars

@@ -10,6 +10,7 @@ import { signIn } from "../features/AuthSlice";
 import { useCookies } from "react-cookie";
 import { pageTop } from "../features/PageSlice";
 import { userNameGet } from "../features/UserSlice";
+import { SignInCheck } from "../components/SignInCheck";
 
 export const SignUp = () => {
   const [nameErrorMessage, setNameErrorMessage] = useState(false);
@@ -23,6 +24,8 @@ export const SignUp = () => {
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
   const dispatch = useDispatch();
   const Navigate = useNavigate();
+
+  SignInCheck();
 
   const validate = (values) => {
     // バリデーション、エラーメッセージの設定

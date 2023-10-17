@@ -1,0 +1,72 @@
+@charset "utf-8";
+@import "../_mixin.scss";
+
+.header {
+  height: 80px;
+  background-color: rgb(99 193 120);
+  color: #ffffff;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  &__log-container {
+    display: flex;
+    align-items: baseline;
+  }
+
+  &__logo {
+    color: #ffffff;
+    text-decoration: none;
+    @include tab {
+      font-size: 24px;
+    }
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__logo-sp {
+    display: none;
+    @include sp {
+      display: inline;
+      font-size: 16px;
+    }
+  }
+
+  &__nav {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 16px;
+  }
+
+
+  svg {
+    margin-top: 24px;
+    width: 32px;
+    transition: 0.1s;
+    &:hover {
+      transform: translate(1px, 3px);
+    }
+  }
+
+  &__nav-container{
+    display: flex;
+    align-items: center;
+  }
+
+  &__nav-hover-signin {
+    display: block;
+    margin-top: 24px;
+    margin-left: 20px;
+  }
+
+  &__signin {
+    display: block;
+    margin-top: 20px;
+    &:hover {
+      transform: translate(1px, 3px);
+    }
+
+  }
+
+}

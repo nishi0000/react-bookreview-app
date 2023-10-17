@@ -3,7 +3,13 @@ import "./header.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { signOut } from "../features/AuthSlice";
-import { BookIcons, SignOutIcons, UserIcons } from "./Heroicons";
+import {
+  BookIcons,
+  HomeIcons,
+  SignInIcons,
+  SignOutIcons,
+  UserIcons,
+} from "./Heroicons";
 import { useState } from "react";
 
 export const Header = () => {
@@ -39,9 +45,13 @@ export const Header = () => {
               Web
             </h1>
           </Link>
-          {auth && (
-            <Link to="profile" className="header__nav header__gest">
+          {auth ? (
+            <Link to="profile" className="header__nav">
               {name}様
+            </Link>
+          ) : (
+            <Link to="profile" className="header__nav">
+              gust様
             </Link>
           )}
         </div>
@@ -49,6 +59,18 @@ export const Header = () => {
         {auth ? (
           <>
             <div className="header__nav-container">
+              <Link
+                to="/"
+                onMouseEnter={() => {
+                  onMouseEnterSignOut("ホーム");
+                }}
+                onMouseLeave={() => {
+                  setNaviText("");
+                }}
+                className="header__nav"
+              >
+                <HomeIcons />
+              </Link>
               <Link
                 to="signin"
                 onMouseEnter={() => {
@@ -92,9 +114,33 @@ export const Header = () => {
           </>
         ) : (
           <>
-            <Link to="signin" onClick={onClickSignOut} className="header__nav header__signin">
-              ログイン
-            </Link>
+            <div className="header__nav-container">
+              <Link
+                to="/"
+                onMouseEnter={() => {
+                  onMouseEnterSignOut("ホーム");
+                }}
+                onMouseLeave={() => {
+                  setNaviText("");
+                }}
+                className="header__nav"
+              >
+                <HomeIcons />
+              </Link>
+              <Link
+                to="signin"
+                onMouseEnter={() => {
+                  onMouseEnterSignOut("ログイン");
+                }}
+                onMouseLeave={() => {
+                  setNaviText("");
+                }}
+                className="header__nav"
+              >
+                <SignInIcons />
+              </Link>
+            </div>
+            <span className="header__nav-hover-signin">{naviText}</span>
           </>
         )}
       </header>

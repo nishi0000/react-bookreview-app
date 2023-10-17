@@ -6,7 +6,7 @@
   background-color: rgb(99 193 120);
   color: #ffffff;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 
   &__log-container {
@@ -42,7 +42,7 @@
 
   svg {
     margin-top: 24px;
-    width: 32px;
+    width: 36px;
     transition: 0.1s;
     &:hover {
       transform: translate(1px, 3px);

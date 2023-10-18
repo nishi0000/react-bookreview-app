@@ -13,7 +13,7 @@ export const Pagination = () => {
 
   const onClickPageMove = () => {
     dispatch(pageMove());
-    axios
+    axios// 進むボタンの表示判断用にデータを取得
       .get(`${url}/public/books?offset=${page + 20}`)
       .then((res) => {
         console.log(res.data);

@@ -18,6 +18,7 @@ export const authSlice = createSlice({
     },
     signOut: (state) => {
       state.isSignIn = false;
+      state.userToken = "";
     },
   },
 });

@@ -84,8 +84,10 @@ export const SignUp = () => {
           console.log(res.data);
           setToken(res.data.token);
           setSignUpErrorMessage("");
-          setCookie("token", res.data.token);// tokenをクッキーにセット
+          setCookie("token", res.data.token);
           dispatch(signIn(res.data.token)); // ログイン処理
+          dispatch(pageTop());// インデックス初期化
+
           axios
           .get(`${url}/users`, {
             headers: {
@@ -117,7 +119,6 @@ export const SignUp = () => {
           }
         })
         .then(() => {
-          dispatch(pageTop()); // ページ遷移時トップページに行く
           Navigate("/");
         })
         .catch((res) => {
@@ -157,7 +158,7 @@ export const SignUp = () => {
       <main className="signup-main">
         <form className="signup-form" onSubmit={handleSubmit}>
           <h2>新規登録</h2>
-          <label className="name-label" role="label">
+          <label className="name-label">
             ユーザーネーム
           </label>
           <input
@@ -170,7 +171,7 @@ export const SignUp = () => {
           {nameErrorMessage && (
             <p className="name-errormessage">{errors.name}</p>
           )}
-          <label className="email-label" role="label">
+          <label className="email-label">
             メールアドレス
           </label>
           <input
@@ -207,7 +208,7 @@ export const SignUp = () => {
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
-          <label className="image-label" role="label">
+          <label className="image-label">
             アイコン画像の登録
           </label>
           <input
@@ -220,6 +221,7 @@ export const SignUp = () => {
             <img
               src={window.URL.createObjectURL(uploadIconImage)}
               className="icon-image"
+              alt="user-icon"
             />
           )}
           <div className="button-container">

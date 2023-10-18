@@ -48,7 +48,7 @@ export const Profile = () => {
     return(<>
 
        <p>プロフィール画面です！</p> 
-       <img src={userIcon}></img>
+       <img src={userIcon} alt="usericon"></img>
        <p>{userName}</p>
        <input type="text"></input>
        <button onClick={onClickUpdate}>更新</button>

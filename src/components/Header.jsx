@@ -50,8 +50,8 @@ export const Header = () => {
               {name}様
             </Link>
           ) : (
-            <Link to="profile" className="header__nav">
-              gust様
+            <Link to="signin " className="header__nav">
+              gest様
             </Link>
           )}
         </div>

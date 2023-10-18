@@ -18,7 +18,6 @@ export const SignIn = () => {
   const [passwordDisplay, setPasswordDisplay] = useState(false);
   const inputElementPassword = useRef(null);
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
-  // const auth = useSelector((state) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
 
@@ -52,7 +51,7 @@ export const SignIn = () => {
           console.log(res.data);
           setSignInErrorMessage("");
           dispatch(signIn(res.data.token));// ログイン処理
-          dispatch(pageTop());// ログインに成功したらレビュートップに行くように
+          dispatch(pageTop());// インデックスを初期化
           setCookie("token", res.data.token);
           Navigate("/");
           axios// ユーザー情報を取得・セットする
@@ -63,8 +62,8 @@ export const SignIn = () => {
             })
             .then((res) => {
               console.log(res);
-              setCookie("name", res.data.name);// データ保持のためクッキーにセット
-              dispatch(userNameGet(res.data.name));// グローバルステートにセット
+              setCookie("name", res.data.name);
+              dispatch(userNameGet(res.data.name));// ヘッダー用に名前を取得
             });
         })
         .catch((res) => {
@@ -101,7 +100,7 @@ export const SignIn = () => {
       <main className="signin-main">
         <h2>ログイン</h2>
         <form className="signin-form" onSubmit={handleSubmit}>
-          <label className="email-label" role="label">
+          <label className="email-label">
             メールアドレス
           </label>
           <input

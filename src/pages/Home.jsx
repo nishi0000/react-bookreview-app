@@ -15,6 +15,7 @@ export const Home = () => {
 
   useEffect(() => {
     if (auth) {// ログイン済なら認証が必要なレビューページへ
+      
       axios
         .get(`${url}/books?offset=${page}`, {
           headers: {

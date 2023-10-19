@@ -77,7 +77,8 @@ export const SignUp = () => {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {// 新規登録する
+    onSubmit: (values) => {
+      // 新規登録する
       axios
         .post(`${url}/users`, values)
         .then((res) => {
@@ -86,19 +87,19 @@ export const SignUp = () => {
           setSignUpErrorMessage("");
           setCookie("token", res.data.token);
           dispatch(signIn(res.data.token)); // ログイン処理
-          dispatch(pageTop());// インデックス初期化
+          dispatch(pageTop()); // インデックス初期化
 
           axios
-          .get(`${url}/users`, {
-            headers: {
-              authorization: `Bearer ${res.data.token}`,
-            },
-          })
-          .then((res) => {
-            console.log(res);
-            setCookie("name", res.data.name);
-            dispatch(userNameGet(res.data.name));
-          });
+            .get(`${url}/users`, {
+              headers: {
+                authorization: `Bearer ${res.data.token}`,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              setCookie("name", res.data.name);
+              dispatch(userNameGet(res.data.name));
+            });
 
           if (uploadIconImage !== "") {
             // 画像ファイルが選択されていれば実行
@@ -158,9 +159,7 @@ export const SignUp = () => {
       <main className="signup-main">
         <form className="signup-form" onSubmit={handleSubmit}>
           <h2>新規登録</h2>
-          <label className="name-label">
-            ユーザーネーム
-          </label>
+          <label className="name-label">ユーザーネーム</label>
           <input
             id="name"
             name="name"
@@ -171,9 +170,7 @@ export const SignUp = () => {
           {nameErrorMessage && (
             <p className="name-errormessage">{errors.name}</p>
           )}
-          <label className="email-label">
-            メールアドレス
-          </label>
+          <label className="email-label">メールアドレス</label>
           <input
             id="email"
             name="email"
@@ -208,9 +205,7 @@ export const SignUp = () => {
           {passwordErrorMessage && (
             <p className="password-errormessage">{errors.password}</p>
           )}
-          <label className="image-label">
-            アイコン画像の登録
-          </label>
+          <label className="image-label">アイコン画像の登録</label>
           <input
             className="file-input"
             accept="image/png, image/jpeg"

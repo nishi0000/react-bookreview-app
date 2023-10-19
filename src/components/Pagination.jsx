@@ -13,7 +13,7 @@ export const Pagination = () => {
 
   const onClickPageMove = () => {
     dispatch(pageMove());
-    axios// 進むボタンの表示判断用にデータを取得
+    axios // 進むボタンの表示判断用にデータを取得
       .get(`${url}/public/books?offset=${page + 20}`)
       .then((res) => {
         console.log(res.data);
@@ -34,7 +34,6 @@ export const Pagination = () => {
     setMoveButton(10);
   };
 
-
   return (
     <div className="paginationlink">
       {page === 0 || (
@@ -53,6 +52,6 @@ export const Pagination = () => {
           進む
         </HashLink>
       )}
-      </div>
+    </div>
   );
 };

@@ -4,10 +4,9 @@ import { NotFound } from "../pages/NotFound";
 import { SignIn } from "../pages/SignIn";
 import { SignUp } from "../pages/SignUp";
 import Profile from "../pages/Profile";
-// import { useSelector } from "react-redux";
+import NewReview from "../pages/NewReview";
 
 export const Router = () => {
-  // const auth = useSelector((state) => state.auth.isSignIn);
 
   return (
     <Routes>
@@ -15,6 +14,7 @@ export const Router = () => {
       <Route exact path="/signin" element={<SignIn />} />
       <Route exact path="/signup" element={<SignUp />} />
       <Route exact path="/profile" element={<Profile />} />
+      <Route exact path="/new" element={<NewReview />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

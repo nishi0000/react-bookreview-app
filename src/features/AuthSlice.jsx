@@ -12,7 +12,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signIn: (state,action) => {
+    signIn: (state, action) => {
       state.isSignIn = true;
       state.userToken = action.payload;
     },

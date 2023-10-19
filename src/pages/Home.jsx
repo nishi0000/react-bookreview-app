@@ -3,23 +3,23 @@ import { url } from "../const";
 import { useEffect, useState } from "react";
 import "./home.scss";
 import { useSelector } from "react-redux";
-import { useCookies } from "react-cookie";
 import { Pagination } from "../components/Pagination";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();
   const [loading, setLoading] = useState(false);
   const auth = useSelector((state) => state.auth.isSignIn);
+  const token = useSelector((state) => state.auth.userToken);
   const page = useSelector((state) => state.page.pageIndex);
-  const [cookies] = useCookies();
 
   useEffect(() => {
-    if (auth) {// ログイン済なら認証が必要なレビューページへ
-      
+    if (auth) {
+      // ログイン済なら認証が必要なレビューページへ
+
       axios
         .get(`${url}/books?offset=${page}`, {
           headers: {
-            authorization: `Bearer ${cookies.token}`,
+            authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -30,7 +30,8 @@ export const Home = () => {
         .catch((res) => {
           console.log(res.response.data);
         });
-    } else {// 未ログインなら認証が不要なレビューページへ
+    } else {
+      // 未ログインなら認証が不要なレビューページへ
       axios
         .get(`${url}/public/books?offset=${page}`)
         .then((res) => {
@@ -42,7 +43,7 @@ export const Home = () => {
           console.log(res.response.data);
         });
     }
-  }, [page]);// pageが更新されるたびに取得する
+  }, [page]); // pageが更新されるたびに取得する
 
   return (
     <>

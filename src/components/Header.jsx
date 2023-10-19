@@ -21,6 +21,7 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const onClickSignOut = () => {
+    
     removeCookie("token");
     navigate("/signin");
     setNaviText("");
@@ -97,14 +98,13 @@ export const Header = () => {
                 <UserIcons />
               </Link>
               <Link
-                to="signin"
+                to="new"
                 onMouseEnter={() => {
                   onMouseEnterSignOut("レビュー新規作成");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
                 }}
-                onClick={onClickSignOut}
                 className="header__nav"
               >
                 <BookIcons />

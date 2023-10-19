@@ -39,7 +39,6 @@
     margin: 0 16px;
   }
 
-
   svg {
     margin-top: 24px;
     width: 36px;
@@ -49,7 +48,7 @@
     }
   }
 
-  &__nav-container{
+  &__nav-container {
     display: flex;
     align-items: center;
   }
@@ -67,7 +66,5 @@
     &:hover {
       transform: translate(1px, 3px);
     }
-
   }
-
 }

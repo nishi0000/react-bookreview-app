@@ -57,6 +57,12 @@
     display: block;
     margin-top: 24px;
     margin-left: 20px;
+    @include tab {
+      display: none;
+    }
+    @include sp {
+      display: none;
+    }
   }
 
   &__signin {

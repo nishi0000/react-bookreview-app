@@ -35,8 +35,8 @@ export const Profile = () => {
       });
   }, []);
 
-  const onClickUpdate = () => {
-    if (userName) {
+  const onClickUpdate = (event) => {
+    event.preventDefault();
       axios // ユーザー情報を取得・セットする
         .put(
           `${url}/users`,
@@ -53,9 +53,7 @@ export const Profile = () => {
           setCookie("name", res.data.name);
           dispatch(userNameGet(res.data.name));
         });
-    } else {
-      alert("1文字以上入力してください。");
-    }
+
   };
 
   const onFileInputChange = (e) => {
@@ -83,7 +81,8 @@ export const Profile = () => {
     }
   };
 
-  const onClickImageUpload = () => {
+  const onClickImageUpload = (event) => {
+    event.preventDefault();
     if (uploadIconImage !== "") {
       // 画像ファイルが選択されていれば実行
       axios
@@ -120,7 +119,7 @@ export const Profile = () => {
 
   return (
     <>
-      <div className="profile-container">
+      <form className="profile-container" onSubmit={onClickUpdate}>
         <h2 className="profile-title">Uesr Profile</h2>
         <details>
           <summary className="user-icon-edit">
@@ -168,12 +167,13 @@ export const Profile = () => {
           className="profile-name-input"
           value={userName}
           onChange={handleNameChange}
+          required
         ></input>
         <br />
-        <button className="profile-button" onClick={onClickUpdate}>
+        <button className="profile-button" type="submit">
           名前変更
         </button>
-      </div>
+      </form>
     </>
   );
 };

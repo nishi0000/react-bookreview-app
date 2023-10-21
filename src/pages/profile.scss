@@ -1,83 +1,83 @@
-
 .profile-title {
-    font-size: 24px;
-    margin: 16px;
+  font-size: 24px;
+  margin: 16px;
 }
 
 .profile-container {
-text-align: center;
+  text-align: center;
+  z-index: -1;
 }
 
 .usericon {
-    height: 256px;
-    border-radius: 50%;
-    background-color: gainsboro;
-    
+  height: 256px;
+  width: 256px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .user-icon-edit {
-    list-style: none;
-    & :hover {
-        opacity: 0.8;
-    }
+  list-style: none;
+  & :hover {
+    opacity: 0.8;
+  }
 }
 
-
-
 .item {
-    max-width: 256px;
-    max-height: 256px;
+  max-width: 256px;
+  max-height: 256px;
+  border-radius: 50%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  &:hover .item__text {
+    opacity: 1;
+  }
+  &__text {
+    position: absolute;
+    z-index: 1;
     border-radius: 50%;
-    margin: 0 auto;
-    position: relative;
-    &:hover .item__text {
-        opacity: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: 0.3s ease-in-out;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p {
+      line-height: 1.8;
     }
-    &__text {
-        position: absolute;
-        border-radius: 50%;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        text-align: center;
-        color: #fff;
-        background-color: rgba(0,0,0,0.6);
-        transition: .3s ease-in-out;
-        opacity: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        p {
-            line-height: 1.8;
-        }
-    }
+  }
 }
 
 .profile-button {
-    background-color: rgb(99 193 120);
-    color: white;
-    padding: 8px 24px;
-    border-radius: 8px;
-    border: none;
-    transition: 0.1s;
-    margin: 16px;
-    &:hover {
-      opacity: 0.8;
-      transform: translate3d(1px, 5px, 0);
-    }
+  background-color: rgb(99 193 120);
+  color: white;
+  padding: 8px 24px;
+  border-radius: 8px;
+  border: none;
+  transition: 0.1s;
+  margin: 16px;
+  &:hover {
+    opacity: 0.8;
+    transform: translate3d(1px, 5px, 0);
+  }
 }
 
 .profile-name-input {
-    font-size: large;
+  font-size: large;
 }
 
 .profile-image-input {
-    margin-top: 16px;
-
+  margin-top: 16px;
 }
 
 .icon-image {
-    margin: 16px auto 0;
+  margin: 16px auto 0;
 }

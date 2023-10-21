@@ -21,7 +21,7 @@ export const NewReview = () => {
 
   SignOutCheck();
 
-  const onClickNewReview = (event) => {
+  const onSubmitNewReview = (event) => {
     event.preventDefault();
     axios
       .post(
@@ -31,7 +31,7 @@ export const NewReview = () => {
           headers: {
             authorization: `Bearer ${token}`,
           },
-        }
+        },
       )
       .then((res) => {
         console.log(res.data);
@@ -39,7 +39,7 @@ export const NewReview = () => {
       })
       .catch((res) => {
         console.log(res);
-        setErrorMessage(`投稿に失敗しました。${res}`)
+        setErrorMessage(`投稿に失敗しました。${res}`);
       });
   };
 
@@ -47,7 +47,7 @@ export const NewReview = () => {
     <>
       <main className="new-bookreview">
         <h2 className="new-bookreview-title">New Book Review</h2>
-        <form className="new-book-form" onSubmit={onClickNewReview}>
+        <form className="new-book-form" onSubmit={onSubmitNewReview}>
           <label>タイトル</label>
           <br />
           <input
@@ -91,7 +91,6 @@ export const NewReview = () => {
               投稿する
             </button>
             <p className="error-message">{errorMessage}</p>
-            
           </div>
         </form>
       </main>

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import "./home.scss";
 import { useSelector } from "react-redux";
 import { Pagination } from "../components/Pagination";
-import {Test} from "./testr";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();
@@ -48,7 +47,6 @@ export const Home = () => {
 
   return (
     <>
-    <Test />
       <h2 className="home-title title-column">Book Review List</h2>
       {!loading ? (
         <p className="review__loading">ロード中</p>

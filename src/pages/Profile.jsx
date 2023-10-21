@@ -35,28 +35,7 @@ export const Profile = () => {
       });
   }, []);
 
-  const onClickUpdate = (event) => {
-    event.preventDefault();
-      axios // ユーザー情報を取得・セットする
-        .put(
-          `${url}/users`,
-          { name: `${userName}` },
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          setUserName(res.data.name);
-          setCookie("name", res.data.name);
-          dispatch(userNameGet(res.data.name));
-        });
-
-  };
-
-  const onFileInputChange = (e) => {
+  const onFileInputChange = (e) => {// アップロードした画像表示＆リサイズ用関数
     // アップロードする画像を表示する
     if (e.target.files.length > 0) {
       // ファイルが選択されていればセット
@@ -64,8 +43,8 @@ export const Profile = () => {
       console.log(e.target.files[0]);
       new Compressor(file, {
         quality: 0.6,
-        maxHeight: 200,
-        maxWidth: 200,
+        maxHeight: 400,
+        maxWidth: 400,
         convertSize: 1000000,
         success(result) {
           const resultfile = new File([result], `${result.name}`, {
@@ -81,7 +60,7 @@ export const Profile = () => {
     }
   };
 
-  const onClickImageUpload = (event) => {
+  const onClickImageUpload = (event) => { // アイコン画像の更新
     event.preventDefault();
     if (uploadIconImage !== "") {
       // 画像ファイルが選択されていれば実行
@@ -94,39 +73,51 @@ export const Profile = () => {
               "content-type": "multipart/form-data",
               authorization: `Bearer ${token}`,
             },
-          }
+          },
         )
-        .then((response) => {
-          console.log(response);
+        .then((res) => {
+          console.log(res);
+          setUserIcon(res.data.iconUrl);
         })
-        .then(() => {
-          axios // ユーザー情報を取得・セットする
-            .get(`${url}/users`, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              setUserName(res.data.name);
-              setUserIcon(res.data.iconUrl);
-              setCookie("name", res.data.name);
-              setUploadIconImage("");
-            });
-        });
+
     }
+  };
+
+  
+  const onSubmitUpdate = (event) => {// 名前の更新
+    event.preventDefault();
+    axios // ユーザー情報を取得・セットする
+      .put(
+        `${url}/users`,
+        { name: `${userName}` },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then((res) => {
+        console.log(res);
+        setUserName(res.data.name);
+        setCookie("name", res.data.name);
+        dispatch(userNameGet(res.data.name));
+      })
+      
   };
 
   return (
     <>
-      <form className="profile-container" onSubmit={onClickUpdate}>
+      <form className="profile-container" onSubmit={onSubmitUpdate}>
         <h2 className="profile-title">Uesr Profile</h2>
         <details>
-          <summary className="user-icon-edit">
+          <summary className="user-icon-edit" >
             <div className="item">
               <div className="item__img">
                 {userIcon ? (
-                  <img className="usericon" src={userIcon} alt="usericon"></img>
+                  <div
+                    className="usericon"
+                    style={{ backgroundImage: `url(${userIcon})` }}
+                  ></div>
                 ) : (
                   <img className="usericon" src={human} alt="usericon"></img>
                 )}

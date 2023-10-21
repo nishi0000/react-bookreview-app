@@ -7,7 +7,6 @@ import Profile from "../pages/Profile";
 import NewReview from "../pages/NewReview";
 
 export const Router = () => {
-
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />

@@ -54,8 +54,8 @@ export const SignUp = () => {
       console.log(e.target.files[0]);
       new Compressor(file, {
         quality: 0.6,
-        maxHeight: 200,
-        maxWidth: 200,
+        maxHeight: 400,
+        maxWidth: 400,
         convertSize: 1000000,
         success(result) {
           const resultfile = new File([result], `${result.name}`, {

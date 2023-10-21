@@ -14,6 +14,7 @@ import { useState } from "react";
 
 export const Header = () => {
   const [naviText, setNaviText] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const auth = useSelector((state) => state.auth.isSignIn);
   const name = useSelector((state) => state.name.userName);
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
@@ -21,11 +22,11 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const onClickSignOut = () => {
-    
     removeCookie("token");
+    dispatch(signOut());
     navigate("/signin");
     setNaviText("");
-    dispatch(signOut());
+    setModalOpen(false);
   };
 
   const onMouseEnterSignOut = (text) => {
@@ -72,19 +73,39 @@ export const Header = () => {
               >
                 <HomeIcons />
               </Link>
-              <Link
-                to="signin"
+              <div
+                onClick={() => setModalOpen(true)}
                 onMouseEnter={() => {
                   onMouseEnterSignOut("ログアウト");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
                 }}
-                onClick={onClickSignOut}
                 className="header__nav"
               >
                 <SignOutIcons />
-              </Link>
+              </div>
+              {modalOpen && (
+                <div className="header__modal-overlay">
+                  <div className="header__modal-content">
+                    <p>ログアウトしますか？</p>
+                      <button
+                        className="header__modal-button"
+                        onClick={() => {
+                          onClickSignOut();
+                        }}
+                      >
+                        はい
+                      </button>
+                      <button
+                        className="modal-button"
+                        onClick={() => setModalOpen(false)}
+                      >
+                        いいえ
+                      </button>
+                  </div>
+                </div>
+              )}
               <Link
                 to="profile"
                 onMouseEnter={() => {
@@ -110,7 +131,6 @@ export const Header = () => {
                 <BookIcons />
               </Link>
             </div>
-            <span className="header__nav-hover-signin">{naviText}</span>
           </>
         ) : (
           <>
@@ -140,9 +160,9 @@ export const Header = () => {
                 <SignInIcons />
               </Link>
             </div>
-            <span className="header__nav-hover-signin">{naviText}</span>
           </>
         )}
+        <span className="header__nav-hover-text">{naviText}</span>
       </header>
     </>
   );

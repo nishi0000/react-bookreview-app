@@ -13,6 +13,7 @@ export const Profile = () => {
   const [userName, setUserName] = useState("");
   const [userIcon, setUserIcon] = useState("");
   const [uploadIconImage, setUploadIconImage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
   const token = useSelector((state) => state.auth.userToken);
   const dispatch = useDispatch();
@@ -78,7 +79,12 @@ export const Profile = () => {
         .then((res) => {
           console.log(res);
           setUserIcon(res.data.iconUrl);
+          setUploadIconImage("");
         })
+        .catch((res) => {
+          console.log(res);
+          setErrorMessage(`更新に失敗しました。${res}`);
+        });
 
     }
   };
@@ -102,6 +108,10 @@ export const Profile = () => {
         setCookie("name", res.data.name);
         dispatch(userNameGet(res.data.name));
       })
+      .catch((res) => {
+        console.log(res);
+        setErrorMessage(`更新に失敗しました。${res}`);
+      });
       
   };
 
@@ -151,7 +161,6 @@ export const Profile = () => {
             </button>
           )}
         </details>
-
         <br />
         <input
           type="text"
@@ -164,6 +173,7 @@ export const Profile = () => {
         <button className="profile-button" type="submit">
           名前変更
         </button>
+        <p className="error-message">{errorMessage}</p>
       </form>
     </>
   );

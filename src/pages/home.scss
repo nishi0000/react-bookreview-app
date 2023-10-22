@@ -14,6 +14,7 @@
   background-color: #eeeeee;
   overflow-wrap: break-word;
 
+
   &__loading {
     text-align: center;
   }
@@ -42,6 +43,17 @@
     margin-top: 8px;
     text-align: right;
   }
+
+  &__container {
+    text-decoration: none;
+    color: black;
+    :hover {
+      opacity: 0.5;
+    }
+
+  }
+
+
 }
 
 .review-column {

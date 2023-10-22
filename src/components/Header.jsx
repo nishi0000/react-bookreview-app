@@ -18,18 +18,18 @@ export const Header = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
   const name = useSelector((state) => state.name.userName);
   const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
-  const navigate = useNavigate();
+  const Navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onClickSignOut = () => {
     removeCookie("token");
     dispatch(signOut());
-    navigate("/signin");
+    Navigate("/signin");
     setNaviText("");
     setModalOpen(false);
   };
 
-  const onMouseEnterSignOut = (text) => {
+  const onMouseNaviText = (text) => {
     setNaviText(text);
   };
 
@@ -52,7 +52,7 @@ export const Header = () => {
               {name}様
             </Link>
           ) : (
-            <Link to="signin " className="header__nav">
+            <Link to="signin" className="header__nav">
               gest様
             </Link>
           )}
@@ -64,7 +64,7 @@ export const Header = () => {
               <Link
                 to="/"
                 onMouseEnter={() => {
-                  onMouseEnterSignOut("ホーム");
+                  onMouseNaviText("ホーム");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -76,7 +76,7 @@ export const Header = () => {
               <div
                 onClick={() => setModalOpen(true)}
                 onMouseEnter={() => {
-                  onMouseEnterSignOut("ログアウト");
+                  onMouseNaviText("ログアウト");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -98,7 +98,7 @@ export const Header = () => {
                         はい
                       </button>
                       <button
-                        className="modal-button"
+                        className="header__modal-button"
                         onClick={() => setModalOpen(false)}
                       >
                         いいえ
@@ -109,7 +109,7 @@ export const Header = () => {
               <Link
                 to="profile"
                 onMouseEnter={() => {
-                  onMouseEnterSignOut("プロフィール");
+                  onMouseNaviText("プロフィール");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -121,7 +121,7 @@ export const Header = () => {
               <Link
                 to="new"
                 onMouseEnter={() => {
-                  onMouseEnterSignOut("レビュー新規作成");
+                  onMouseNaviText("レビュー新規作成");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -138,7 +138,7 @@ export const Header = () => {
               <Link
                 to="/"
                 onMouseEnter={() => {
-                  onMouseEnterSignOut("ホーム");
+                  onMouseNaviText("ホーム");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -150,7 +150,7 @@ export const Header = () => {
               <Link
                 to="signin"
                 onMouseEnter={() => {
-                  onMouseEnterSignOut("ログイン");
+                  onMouseNaviText("ログイン");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");

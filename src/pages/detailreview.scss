@@ -2,11 +2,53 @@
 .bookreview {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 70%;
+    max-width: 750px;
     margin: 0 auto;
   }
 
 .bookreview-title {
     text-align: center;
     margin: 16px 0;
+  }
+
+  .loading {
+    text-align: center;
+    margin-top: 64px;
+  }
+
+  .bookreview-detail-title {
+    font-weight:normal;
+    margin-top: 16px;
+
+  }
+
+  .bookreview-detail {
+    margin-top: 8px;
+  }
+
+  .bookreview-container {
+    background-color: #eeeeee;
+    padding: 24px 36px;
+  }
+
+  .bookreview-detail-url {
+    float: left;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  .bookreview-detail-reviewer {
+    font-size: 14px;
+    text-align: right;
+    margin-top: 16px;
+  }
+
+  .bookreview-back {
+    text-align: center;
+    margin-top: 24px;
+    &:hover{
+      opacity: 0.5;
+      cursor: pointer;
+    }
   }

@@ -17,9 +17,9 @@ export const Edit = () => {
     const handleBookUrlChange = (e) => setBookUrl(e.target.value);
     const handleDetailChange = (e) => setDetail(e.target.value);
     const handleReviewChange = (e) => setReview(e.target.value);
-    const Navigate = useNavigate();
     const token = useSelector((state) => state.auth.userToken);
     const param = useParams();
+    const Navigate = useNavigate();
   
     SignOutCheck();
 
@@ -44,7 +44,6 @@ export const Edit = () => {
           console.log(res);
           setErrorMessage(`投稿に失敗しました。${res}`);
         });
-
     },[])
   
     const onSubmitEditReview = (event) => { // データの更新
@@ -69,8 +68,6 @@ export const Edit = () => {
         });
     };
 
-
-
       const onClickDelete = () => { // データの削除
         axios
           .delete(`${url}/books/${param.bookId}`, {
@@ -80,9 +77,7 @@ export const Edit = () => {
           })
           .then((res) => {
             console.log(res.data);
-            Navigate("/");
-            setModalOpen(false);
-            
+            Navigate("/")
           });
       };
 
@@ -133,7 +128,7 @@ export const Edit = () => {
         <button className="edit-book-submit-button" type="submit">
           更新
         </button>
-        <button className="edit-book-delete-button" onClick={()=>setModalOpen(true)}>
+        <button className="edit-book-delete-button" type="button" onClick={()=>setModalOpen(true)}>
           削除
         </button>
         {modalOpen && (
@@ -141,14 +136,13 @@ export const Edit = () => {
                   <div className="header__modal-content">
                     <p>レビューを削除しますか？</p>
                       <button
-                        className="header__modal-button"
-                        onClick={() => {onClickDelete()}}
+                        className="header__modal-button" onClick={onClickDelete}
                       >
                         はい
                       </button>
                       <button
                         className="header__modal-button"
-                        onClick={() => {setModalOpen(false)}}
+                        onClick={() => setModalOpen(false)}
                       >
                         いいえ
                       </button>

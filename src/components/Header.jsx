@@ -70,6 +70,7 @@ export const Header = () => {
                   setNaviText("");
                 }}
                 className="header__nav"
+                aria-label="トップに戻る"
               >
                 <HomeIcons />
               </Link>
@@ -82,6 +83,7 @@ export const Header = () => {
                   setNaviText("");
                 }}
                 className="header__nav"
+                aria-label="ログアウト"
               >
                 <SignOutIcons />
               </div>
@@ -115,6 +117,7 @@ export const Header = () => {
                   setNaviText("");
                 }}
                 className="header__nav"
+                aria-label="プロフィール"
               >
                 <UserIcons />
               </Link>
@@ -127,6 +130,7 @@ export const Header = () => {
                   setNaviText("");
                 }}
                 className="header__nav"
+                aria-label="レビュー新規作成"
               >
                 <BookIcons />
               </Link>
@@ -144,6 +148,7 @@ export const Header = () => {
                   setNaviText("");
                 }}
                 className="header__nav"
+                aria-label="トップに戻る"
               >
                 <HomeIcons />
               </Link>
@@ -156,6 +161,7 @@ export const Header = () => {
                   setNaviText("");
                 }}
                 className="header__nav"
+                aria-label="ログイン"
               >
                 <SignInIcons />
               </Link>

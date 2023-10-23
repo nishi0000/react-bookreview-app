@@ -2,17 +2,14 @@ import axios from "axios";
 import { url } from "../const";
 import { useEffect, useState } from "react";
 import "./home.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Pagination } from "../components/Pagination";
-import { Link } from "react-router-dom";
-import { bookIdGet } from "../features/PramesSlice";
-import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [bookReviewData, setBookReviewData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [cookies, setCookie, removeCookie] = useCookies(); // eslint-disable-line no-unused-vars
-  const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const auth = useSelector((state) => state.auth.isSignIn);
   const token = useSelector((state) => state.auth.userToken);
   const page = useSelector((state) => state.page.pageIndex);
@@ -49,6 +46,27 @@ export const Home = () => {
     }
   }, [page]); // pageが更新されるたびに取得する
 
+  const onClickSubmitLog = (id) => {// ログの送信
+    axios
+        .post(`${url}/logs`, {
+          selectBookId: `${id}`
+        },{
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+  }
+
+  const onClickEdit = (id) => {
+    Navigate(`/edit/${id}`);
+  }
+
   return (
     <main>
       <h2 className="home-title title-column">Book Review List</h2>
@@ -58,22 +76,20 @@ export const Home = () => {
         bookReviewData.map((data, index) => {
           return (
             <div key={index} className="review review-column">
-              <Link
+              {auth ? (<Link
+                to={`detail/${data.id}`}
                 className="review__container"
-                to={{
-                  pathname: `/review/${data.id}`,
-                }}
-                onClick={() => {
-                  dispatch(bookIdGet(data.id));
-                  setCookie("id", data.id);
-                }}
+                onClick={()=> onClickSubmitLog(data.id)}
               >
                 <h3 className="review__title">タイトル：{data.title}</h3>
-              </Link>
+              </Link>):(
+                <h3 className="review__title">タイトル：{data.title}</h3>
+              )}
               <p className="review__detail">詳細:{data.detail}</p>
               <p className="review__comment">レビュー:{data.review}</p>
               <p className="review__url">URL:{data.url}</p>
               <p className="review__reviewer">レビュワー：{data.reviewer}</p>
+              {data.isMine &&<div className="review__link" onClick={() =>onClickEdit(data.id)}>編集する</div>}
             </div>
           );
         })

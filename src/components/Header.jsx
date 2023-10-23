@@ -53,7 +53,7 @@ export const Header = () => {
             </Link>
           ) : (
             <Link to="signin" className="header__nav">
-              gest様
+              guest様
             </Link>
           )}
         </div>

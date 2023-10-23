@@ -25,34 +25,45 @@
 
   &__detail {
     font-size: 16px;
-    margin-top: 8px;
+    margin-top: 16px;
   }
 
   &__comment {
     font-size: 16px;
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   &__url {
     float: left;
-    margin-top: 8px;
+    margin-top: 16px;
   }
 
   &__reviewer {
     font-size: 14px;
-    margin-top: 8px;
+    margin-top: 16px;
+    margin-bottom: 0;
     text-align: right;
   }
 
   &__container {
     text-decoration: none;
     color: black;
-    :hover {
+    &:hover {
       opacity: 0.5;
+
+  }}
+
+  &__link{
+    text-align: right;
+    margin-top: 12px;
+    font-size: 14px;
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+      transform: translate(1px, 1px);
     }
-
   }
-
 
 }
 
@@ -60,7 +71,7 @@
   margin: 16px auto;
   width: 70%;
   max-width: 750px;
-  padding: 24px 32px;
+  padding: 24px 36px;
 
   @include tab {
     width: 80%;

@@ -167,6 +167,7 @@ export const Profile = () => {
           className="profile-name-input"
           value={userName}
           onChange={handleNameChange}
+          aria-label="name"
           required
         ></input>
         <br />

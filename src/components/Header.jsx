@@ -29,9 +29,6 @@ export const Header = () => {
     setModalOpen(false);
   };
 
-  const onMouseNaviText = (text) => {
-    setNaviText(text);
-  };
 
   return (
     <>
@@ -64,7 +61,7 @@ export const Header = () => {
               <Link
                 to="/"
                 onMouseEnter={() => {
-                  onMouseNaviText("ホーム");
+                  setNaviText("ホーム");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -77,13 +74,12 @@ export const Header = () => {
               <div
                 onClick={() => setModalOpen(true)}
                 onMouseEnter={() => {
-                  onMouseNaviText("ログアウト");
+                  setNaviText("ログアウト");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
                 }}
                 className="header__nav"
-                aria-label="ログアウト"
               >
                 <SignOutIcons />
               </div>
@@ -111,7 +107,7 @@ export const Header = () => {
               <Link
                 to="profile"
                 onMouseEnter={() => {
-                  onMouseNaviText("プロフィール");
+                  setNaviText("プロフィール");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
@@ -124,13 +120,13 @@ export const Header = () => {
               <Link
                 to="new"
                 onMouseEnter={() => {
-                  onMouseNaviText("レビュー新規作成");
+                  setNaviText("レビュー新規作成");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
                 }}
                 className="header__nav"
-                aria-label="レビュー新規作成"
+                aria-label="レビュー作成"
               >
                 <BookIcons />
               </Link>
@@ -142,20 +138,20 @@ export const Header = () => {
               <Link
                 to="/"
                 onMouseEnter={() => {
-                  onMouseNaviText("ホーム");
+                  setNaviText("ホーム");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");
                 }}
                 className="header__nav"
-                aria-label="トップに戻る"
+                aria-label="ホーム"
               >
                 <HomeIcons />
               </Link>
               <Link
                 to="signin"
                 onMouseEnter={() => {
-                  onMouseNaviText("ログイン");
+                  setNaviText("ログイン");
                 }}
                 onMouseLeave={() => {
                   setNaviText("");

@@ -78,6 +78,9 @@ export const Edit = () => {
           .then((res) => {
             console.log(res.data);
             Navigate("/")
+          })
+          .catch((res) => {
+            console.log(res);
           });
       };
 
@@ -93,6 +96,7 @@ export const Edit = () => {
         className="edit-review-title-input"
         onChange={handleTitleChange}
         value={title}
+        aria-label="title"
         required
       ></input>
       <br />
@@ -103,6 +107,7 @@ export const Edit = () => {
         className="edit-book-url-input"
         onChange={handleBookUrlChange}
         value={bookUrl}
+        aria-label="url"
         required
       ></input>
       <br />
@@ -112,6 +117,7 @@ export const Edit = () => {
         className="edit-book-detail-input"
         onChange={handleDetailChange}
         value={detail}
+        aria-label="detail"
         required
       ></textarea>
       <br />
@@ -121,6 +127,7 @@ export const Edit = () => {
         className="edit-book-review-input"
         onChange={handleReviewChange}
         value={review}
+        aria-label="review"
         required
       ></textarea>
       <br />

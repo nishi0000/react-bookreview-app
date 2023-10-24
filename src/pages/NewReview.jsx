@@ -55,6 +55,7 @@ export const NewReview = () => {
             className="new-review-title-input"
             onChange={handleTitleChange}
             value={title}
+            aria-label="title"
             required
           ></input>
           <br />
@@ -65,6 +66,7 @@ export const NewReview = () => {
             className="new-book-url-input"
             onChange={handleBookUrlChange}
             value={bookUrl}
+            aria-label="url"
             required
           ></input>
           <br />
@@ -74,6 +76,7 @@ export const NewReview = () => {
             className="new-book-detail-input"
             onChange={handleDetailChange}
             value={detail}
+            aria-label="detail"
             required
           ></textarea>
           <br />
@@ -83,6 +86,7 @@ export const NewReview = () => {
             className="new-book-review-input"
             onChange={handleReviewChange}
             value={review}
+            aria-label="review"
             required
           ></textarea>
           <br />

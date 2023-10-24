@@ -166,6 +166,7 @@ export const SignUp = () => {
             className="name-input"
             value={values.name}
             onChange={handleChange}
+            aria-label="name"
           />
           {nameErrorMessage && (
             <p className="name-errormessage">{errors.name}</p>
@@ -177,6 +178,7 @@ export const SignUp = () => {
             className="email-input"
             value={values.email}
             onChange={handleChange}
+            aria-label="email"
           />
           {emailErrorMessage && (
             <p className="email-errormessage">{errors.email}</p>
@@ -190,9 +192,9 @@ export const SignUp = () => {
               type="password"
               className="password-input"
               value={values.password}
-              // value={passwordGenerate}
               onChange={handleChange}
               autoComplete="off"
+              aria-label="password"
             />
             <button
               onClick={onClickPassword}
@@ -211,6 +213,7 @@ export const SignUp = () => {
             accept="image/png, image/jpeg"
             type="file"
             onChange={onFileInputChange}
+            aria-label="image"
           />
           {uploadIconImage && (
             <img

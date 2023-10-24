@@ -23,12 +23,13 @@ export const Detail = () => {
         console.log(res.data);
         setBookData(res.data);
         setIsLoading(false);
+      })
+      .catch((res) => {
+        console.log(res);
       });
   }, []);
 
-  const onClickBack = () => {
-    Navigate(-1);
-  }
+
 
   return (
     <main className="bookreview">
@@ -51,7 +52,7 @@ export const Detail = () => {
           <div className="bookreview-detail-reviewer">レビュワー :{bookData.reviewer}</div>
           </div>
 
-          <div className="bookreview-back" onClick={onClickBack}>戻る</div>
+          <div className="bookreview-back" onClick={()=>Navigate(-1)}>戻る</div>
         </>
       )}
     </main>

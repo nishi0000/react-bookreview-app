@@ -106,6 +106,7 @@ export const SignIn = () => {
             className="email-input"
             value={values.email}
             onChange={handleChange}
+            aria-label="email"
           />
           {emailErrorMessage && (
             <p className="email-errormessage">{errors.email}</p>
@@ -121,6 +122,7 @@ export const SignIn = () => {
               value={values.password}
               onChange={handleChange}
               autoComplete="off"
+              aria-label="password"
             />
             <button
               onClick={onClickPassword}
